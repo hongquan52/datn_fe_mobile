@@ -34,17 +34,7 @@ const HistoryOrderDetailScreen = ({ navigation, route }) => {
             })
             .catch((err) => console.log(err))
     }, [])
-    // RELOAD DATA:
-    // useEffect(() => {
-    //     // GET DELIVERY BY ORDERID
-    //     axios.get(`${BaseURL}/api/v1/delivery/order?orderId=${item.orderId}`)
-    //         .then((res) => {
-    //             setDeliveryData(res.data);
-    //             setStateStatus(res.data.status);
-    //         })
-    //         .catch((err) => console.log(err))
-    // }, [reload])
-    
+   
     // UPDATE STATUS ORDER FUNCTION
     const updateOrderStatus = (status) => {
         var dataJson = JSON.stringify({
@@ -123,7 +113,10 @@ const HistoryOrderDetailScreen = ({ navigation, route }) => {
                                     </View>
                                     <View style={styles.inputDelivery}>
                                         <Text style={{ lineHeight: 30, fontSize: 17, fontWeight: 600 }}>Delivery address</Text>
-                                        <Text style={{ lineHeight: 30, fontSize: 17 }}>{deliveryData[0]?.deliveryApartmentNumber}, {deliveryData[0]?.deliveryWard}, {deliveryData[0]?.deliveryDistrict}, {deliveryData[0]?.deliveryProvince}</Text>
+                                        <Text style={{ lineHeight: 30, fontSize: 17 }}>{deliveryData[0]?.deliveryApartmentNumber},
+                                        {deliveryData[0]?.deliveryWard[0] === '{' ? JSON.parse(deliveryData[0]?.deliveryWard).ward_name : deliveryData[0]?.deliveryWard},
+                                        {deliveryData[0]?.deliveryDistrict[0] === '{' ? JSON.parse(deliveryData[0]?.deliveryDistrict).district_name : deliveryData[0]?.deliveryDistrict},
+                                        {deliveryData[0]?.deliveryProvince}</Text>
                                     </View>
                                     
                                 </View>
@@ -139,14 +132,7 @@ const HistoryOrderDetailScreen = ({ navigation, route }) => {
 
                                     <Text style={{ lineHeight: 30, fontSize: 17 }}>{deliveryData[0]?.shipperPhone}</Text>
                                 </View>
-                                {/* <Image source={require("../../../assets/successfullLogo.png")}
-                                        style={{
-                                            height: 100,
-                                            width: 100,
-                                            marginLeft: 20,
-                                            marginTop: 5,
-                                        }}    
-                                /> */}
+                                
                                 <View style={{
                                     borderColor: 'green',
                                     borderWidth: 1,

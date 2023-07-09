@@ -7,13 +7,18 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import COLORS from '../../consts/colors'
 import categories from '../../consts/categories'
 import { Controller, useForm } from 'react-hook-form'
-import Slider from '../components/Slider'
+// import Slider from '../components/Slider'
 import Card from '../components/Card'
 import { useNavigation } from '@react-navigation/native'
 import { useEffect } from 'react'
 import axios from 'axios'
 import { useState } from 'react'
 import { BaseURL } from '../../consts/BaseURL'
+import { Suspense } from 'react'
+
+const Slider = React.lazy(() => import('../components/Slider'));
+
+
 const images = [
   'https://treobangron.com.vn/wp-content/uploads/2023/01/banner-shopee-12.jpg',
   'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh8SISDW3DMU6c18rbgwn15ZaWksRvfyW3qiO2tN8K8-ANZ4sWo8mGOjcPqnCGKWbPJ28FzZ-X_eyshUv5HohOk5hlWm8JEy0QualVSzMkSCH5Yq992C2gtstscRQjfeSr72KOvO-cc2ATYtstsXq9Bl1cA2M06c7r3NDpcGgN0cTmP4-EZiAKc6YuGZA/s1920/saleluongve.jpg',
@@ -381,7 +386,9 @@ const ProductsScreen = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         style={{ marginBottom: 100 }}
       >
-        <Slider images={images} />
+        <Suspense fallback={<Text>Loading...</Text>}>
+          <Slider images={images} />
+        </Suspense>
         <ListCategories />
 
         {

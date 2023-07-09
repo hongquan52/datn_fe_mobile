@@ -1,78 +1,3 @@
-// import React from 'react'
-// import { View, Text, SafeAreaView, Image, TextInput, TouchableOpacity, StyleSheet} from 'react-native'
-// import Icon from 'react-native-vector-icons/MaterialIcons'
-// import Icons from 'react-native-vector-icons/MaterialCommunityIcons'
-// import COLORS from '../../consts/colors'
-// import {PrimaryButton} from '../components/Button'
-
-// const LoginScreen = ({navigation}) => {
-//   const [hidePassword, setHidePassword] = React.useState(true);
-
-//   return (
-//     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-//       <View style={{paddingHorizontal: 25}}>
-//         <View style={{alignItems: 'center'}}>
-//           <Image source={require('../../assets/cheesePizza.png')} style={{borderRadius: 50,height: 200, width: 200, transform:[{rotate: '-5deg'}]}} />
-
-//         </View>
-//         <Text style={{fontSize: 28, fontWeight:500, marginTop: 30, marginBottom: 10}}>Login</Text>
-//         {/* email */}
-//         <View style={{flexDirection: 'row', borderBottomColor: COLORS.dark, borderBottomWidth: 1, marginBottom: 25}}>
-//           <Icon name='email' color={COLORS.dark} size={25} style={{ marginRight: 5 }}/>
-//           <TextInput placeholder='Email...' 
-//           style={{ flex: 1, paddingVertical: 0}}
-//             keyboardType='email' />
-//         </View>
-//         {/* password */}
-//         <View style={{flexDirection: 'row', borderBottomColor: COLORS.dark, borderBottomWidth: 1, marginBottom: 25}}>
-//           <Icon name='network-locked' color={COLORS.dark} size={25} style={{ marginRight: 5 }} />
-//           <TextInput placeholder='Password...' 
-//           style={{ flex: 1, paddingVertical: 0}}
-//             keyboardType='password'
-//             secureTextEntry={hidePassword}
-//              />
-//           <TouchableOpacity>
-//           {
-//             hidePassword ? <Icons name='eye-off' size={20} onPress={() => setHidePassword(false)} /> : <Icons name='eye' size={20} onPress={() => setHidePassword(true)} />
-//           }
-//           </TouchableOpacity>
-//           {/* <TouchableOpacity style={{ color: COLORS.white, fontWeight: 500 }}>
-//             <Text>Forgot?</Text>
-//           </TouchableOpacity> */}
-//         </View>
-//         <PrimaryButton title={"LOGIN"} onPress={() => navigation.navigate("HomeScreen")} />
-//         <Text style={{textAlign: 'center', marginTop: 10, fontWeight: 'bold'}}>Or login by...</Text>
-//         <View style={{justifyContent: 'center', alignItems: 'center', flexDirection:'row', marginVertical: 20}}>
-//           <TouchableOpacity>
-//             <Image source={require("../../assets/loginRegisterPage/Google.png")} style={style.methodLogin} />
-//           </TouchableOpacity>
-//           <TouchableOpacity>
-//             <Image source={require("../../assets/loginRegisterPage/Github.png")} style={style.methodLogin} />
-//           </TouchableOpacity>
-//         </View>
-//         <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 10, alignItems: 'center'}}>
-//           <Text>You don't have a account</Text>
-//           <TouchableOpacity style={{marginLeft: 5}}>
-//             <Text style={{fontSize: 16, fontWeight: 'bold', color:COLORS.primary}}
-//                   onPress={() => navigation.navigate("RegisterScreen")}
-//             >
-//             Register</Text>
-//           </TouchableOpacity>
-//         </View>
-//       </View>
-
-//     </SafeAreaView>
-//   )
-// }
-
-// const style = StyleSheet.create({
-//   methodLogin: {
-//     width: 50, height: 50, marginHorizontal: 20
-//   }
-// })
-
-// export default LoginScreen
-
 import React, { useState, useCallback } from "react";
 import axios from "axios";
 import jwtDecode from 'jwt-decode'
@@ -92,12 +17,11 @@ import {
 import COLORS from "../../consts/colors";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useForm, Controller } from 'react-hook-form';
-import { PrimaryButton } from "../components/Button";
+import { PrimaryButton, SecondaryButton } from "../components/Button";
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 const LoginScreen = ({ navigation }) => {
-
   // MODAL VISIBLE : NOTIFICATION
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -114,18 +38,25 @@ const LoginScreen = ({ navigation }) => {
 
     axios.post(`${BaseURL}/auth/login`, formdata)
       .then(async (res) => {
-        const userID = decoded(res.data.data.accessToken)
-
+        const userID = decoded(res.data.data.accessToken);
+        const roleID = getRoleID(res.data.data.accessToken);
+        
         await AsyncStorage.setItem("userId", userID);
         await AsyncStorage.setItem("userName", res.data.data.name);
-        navigation.navigate('HomeScreen');
+
+        if(roleID === 3) {
+          navigation.navigate("DashboardShipper");
+        }
+        else if(roleID === 2) {
+          navigation.navigate('HomeScreen');
+        }
       })
       .catch((err) => {
         console.log("error respose: ", err)
         setModalVisible(!modalVisible);
       });
     
-    console.log(data)
+    // console.log(data)
 
   }
   const decoded = (token) => {
@@ -134,6 +65,12 @@ const LoginScreen = ({ navigation }) => {
     const userID = Math.floor(decodeSub)
     const userIDFinal = userID.toString();
     return userIDFinal;
+  }
+  const getRoleID = (token) => {
+    const decoded = jwtDecode(token);
+    const roleID = decoded.sub[decoded.sub.length - 1];
+    const roleID2 = parseInt(roleID);
+    return roleID2;
   }
 
   return (
@@ -233,12 +170,26 @@ const LoginScreen = ({ navigation }) => {
           )}
         />
         {errors.password && <Text style={styles.textDanger}>{errors.password.message}</Text>}
+        <View style={{justifyContent: "flex-end", flexDirection: "row", marginRight: 10}}>
+          <TouchableOpacity onPress={() => navigation.navigate("ResetPasswordScreen")}>
+            <Text style={{fontSize: 16, color: COLORS.primary}}>Reset password</Text>
+          </TouchableOpacity>
+        </View>
         <View style={{marginTop: 20}}>
           <PrimaryButton title={'Login'} onPress={handleSubmit(onSubmit)} />
+          <TouchableOpacity onPress={() => Linking.openURL(`https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&client_id=871514274935-q9ocgbeo023sid5ac22e4qld2muu8rad.apps.googleusercontent.com&scope=openid%20profile%20email&state=fT6tHRASkWSvhtmKk6NsAy_gNShkzkN3le0OLb9Cl1U%3D&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Flogin%2Foauth2%2Fcode%2Fgoogle&nonce=0zIQZc4E2v6V57eZ9G95JonpIKQNDbklGO2A6_prSR0&service=lso&o2v=2&flowName=GeneralOAuthFlow`)}>
+            <View style={{backgroundColor: 'white', height: 60,borderRadius: 30, flexDirection: 'row',
+                  justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
+              <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png'}}
+                  style={{width: 100, height: 30, position : 'absolute', top: 'auto', right: 'auto', zIndex: 10}}
+                />
+            </View>
+          </TouchableOpacity>
+          
         </View>
         <View style={{justifyContent: 'center',marginVertical: 25, alignItems: "center"}}>
           <Text style={{fontSize: 16}}>You don't have a account?
-            <Text onPress={() => navigation.navigate("RegisterScreen")}  style={{fontSize: 16, color: COLORS.primary}}>Sign up
+            <Text onPress={() => navigation.navigate("RegisterScreen") }  style={{fontSize: 16, color: COLORS.primary}}>Sign up
             
             </Text>
           </Text>

@@ -21,6 +21,8 @@ const FormAddress = ({navigation}) => {
 
   // ADDRESS STATE:
   const [provinceList, setProvinceList] = useState();
+  const [districtList, setDistrictList] = useState();
+  const [WardList, setWardList] = useState();
 
   // Alert
   const createOneButtonAlert = () =>
@@ -33,26 +35,23 @@ const FormAddress = ({navigation}) => {
         }
     },
     ]);
-  // HANDLE FILTER DISTRICT BY PROVINCE
-  const handleDistrict = () => {
-    const districtFilter = district.filter((dis) => {
-      return dis.provinceId === provinceValue;
-    })
-    setDistrict(districtFilter);
-  }
+  
   // PROVINCE
   const [provinceOpen, setProvinceOpen] = useState(false);
   const [provinceValue, setProvinceValue] = useState(null);
   const [province, setProvince] = useState([]);
+  const [provinceName, setProvinceName] = useState('');
   
   // DISTRICT
   const [districtOpen, setDistrictOpen] = useState(false);
   const [districtValue, setDistrictValue] = useState(null);
   const [district, setDistrict] = useState([]);
-  // DISTRICT
+  const [districtName, setDistrictName] = useState('');
+  // WARD
   const [wardOpen, setWardOpen] = useState(false);
   const [wardValue, setWardValue] = useState(null);
   const [ward, setWard] = useState([]);
+  const [wardName, setWardName] = useState('');
   // SET OPEN
   const onprovinceOpen = useCallback(() => {
     setDistrictOpen(false);
@@ -74,9 +73,9 @@ const FormAddress = ({navigation}) => {
     // API
     var dataForm = new FormData();
     dataForm.append('apartmentNumber', data.apartmentNumber);
-    dataForm.append('ward', data.ward);
-    dataForm.append('district', data.district);
-    dataForm.append('province', data.province);
+    dataForm.append('ward', JSON.stringify({ward_id: data.ward, ward_name: wardName}) );
+    dataForm.append('district', JSON.stringify({district_id: data.district, district_name: districtName}));
+    dataForm.append('province', provinceName);
     dataForm.append('defaultAddress', '0');
 
     axios.post(`${BaseURL}/api/v1/address/user?userId=${id}`, dataForm)
@@ -108,7 +107,6 @@ const FormAddress = ({navigation}) => {
       .then((res) => {
         console.log("Response province: ", res.data.data.length);
         setProvinceList(res.data.data);
-
         var pickerProvinces = []
     
         res.data.data.forEach(item => {
@@ -124,7 +122,6 @@ const FormAddress = ({navigation}) => {
         console.log("Error province: ", err);
       })
       
-
       //DISTRICT
 
   }, []);
@@ -139,7 +136,8 @@ const FormAddress = ({navigation}) => {
       }}
       )
         .then((res) => {
-          console.log("Response district: ", res.data.data.length);
+          setDistrictList(res.data.data);
+
           var pickersDistrict = []
     
           res.data.data.forEach(item => {
@@ -152,7 +150,14 @@ const FormAddress = ({navigation}) => {
         })
         .catch((err) => {
           console.log("Error district response: ", err);
-        }) 
+        })
+        // SET PROVINCE NAME
+        if(provinceValue !== null) {
+          let x = provinceList?.filter(
+            (item) => item.ProvinceID === provinceValue
+          )
+          setProvinceName(x[0].ProvinceName);
+        }
   }, [provinceValue])
 
   useEffect(() => {
@@ -165,7 +170,7 @@ const FormAddress = ({navigation}) => {
     }}
     )
       .then((res) => {
-        console.log("Response district: ", res.data.data.length);
+        setWardList(res.data.data);
         var pickersWard = []
   
         res.data.data.forEach(item => {
@@ -178,9 +183,24 @@ const FormAddress = ({navigation}) => {
       })
       .catch((err) => {
         console.log("Error district response: ", err);
-      }) 
+      })
+      // SET DISTRICT NAME:
+      if(districtValue !== null) {
+        let y = districtList?.filter(
+          (item) => item.DistrictID === districtValue
+        )
+        setDistrictName(y[0].DistrictName);
+      }
   }, [districtValue])
   
+  useEffect(() => {
+    if(wardValue !== null) {
+      let z = WardList?.filter(
+        (item) => item.WardCode === wardValue
+      )
+      setWardName(z[0].WardName);
+    }
+  }, [wardValue])
 
   return (
     <SafeAreaView style={{}}>

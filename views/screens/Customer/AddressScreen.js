@@ -19,6 +19,8 @@ import {
 import { BaseURL } from '../../../consts/BaseURL';
 import { useNavigation } from '@react-navigation/native';
 import { PrimaryButton } from '../../components/Button';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState } from 'react';
 
 const { width } = Dimensions.get('window');
 
@@ -42,6 +44,7 @@ if (
 }
 
 export default function CheckoutScreen() {
+  const [userIDDD, setUserIDDD] = useState(0);
   const navigation = useNavigation();
 
   const [loading, setLoading] =React.useState(false);
@@ -51,7 +54,7 @@ export default function CheckoutScreen() {
       return item.address.id !== id
     })
     setData(arr);
-    axios.delete(`${BaseURL}/api/v1/address/user?userId=1&addressId=${id}`)
+    axios.delete(`${BaseURL}/api/v1/address/user?userId=${userIDDD}&addressId=${id}`)
       .then((res) => {
         console.log(res.data.message)
       })
@@ -60,10 +63,16 @@ export default function CheckoutScreen() {
       })
     LayoutAnimation.configureNext(layoutAnimConfig)
   };
-  React.useEffect(() => {
+  React.useEffect(async () => {
+    const userID = await AsyncStorage.getItem("userId");
+
+    const userID2 = parseInt(userID)
+    
+    setUserIDDD(userID2);
+
     setLoading(true);
 
-    axios.get(`${BaseURL}/api/v1/address/user?userId=1`)
+    axios.get(`${BaseURL}/api/v1/address/user?userId=${userID2}`)
       .then((res) => setData(res.data))
       .catch((error) => console.log("Error: ", error))
       .finally(() => setLoading(false))
@@ -118,15 +127,18 @@ export default function CheckoutScreen() {
                   <TouchableOpacity onPress={() => navigation.navigate("EditAddressScreen", item)}>
                     <Text style={styles.addressText}>{item.address.apartmentNumber}</Text>
                     <View style={styles.addressDetail}>
-                      <Text style={styles.addressText}>{item.address.ward},</Text>
-                      <Text style={styles.addressText}>{item.address.district},</Text>
+                      <Text style={styles.addressText}>{JSON.parse(item.address.ward).ward_name},</Text>
+                      <Text style={styles.addressText}>{JSON.parse(item.address.district).district_name},</Text>
                       <Text style={styles.addressText}>{item.address.province}</Text>
                     </View>
-                    <View style={styles.defaultAddress}>
-                      {item.defaultAddress ? <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Default address</Text>
-                        : <Text style={{ color: COLORS.dark }}>Second address</Text>}
-
-                    </View>
+                    {
+                      item.defaultAddress ?
+                      <View style={styles.defaultAddress}>
+                        <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Default address</Text>
+                      </View>
+                      :
+                      null
+                    }
                   </TouchableOpacity>
                   <Icon name='arrow-forward-ios' size={25} />
                 </View>

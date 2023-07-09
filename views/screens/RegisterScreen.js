@@ -62,8 +62,9 @@ const RegisterScreen = ({ navigation }) => {
 
       axios.post(`${BaseURL}/api/v1/user`, dataForm)
         .then((res) => {
-          console.log("Sign up response: ", res.data.message);
+          
           setModalVisibleSignUp(true);
+          alert("Please check your email to verify account!")
         })
         .catch((err) => {
           console.log("Error sign up response: ", err);

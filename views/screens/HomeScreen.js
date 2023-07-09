@@ -5,10 +5,11 @@ import { TextInput, ScrollView, FlatList } from 'react-native-gesture-handler'
 import COLORS from '../../consts/colors'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons'
-import listVoucher from '../../consts/vouchers'
-import Slider from '../components/Slider'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BaseURL } from '../../consts/BaseURL'
+import { Suspense } from 'react'
+
+const Slider = React.lazy(() => import('../components/Slider'));
 
 const { width } = Dimensions.get("screen");
 const cardWidth = width / 2;
@@ -266,19 +267,6 @@ const HomeScreen = ({ navigation }) => {
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Icons name='barcode' size={25} color={COLORS.white} />
-                  <TouchableOpacity onPress={() => {
-                    navigation.navigate("DashboardShipper");
-                    setModalVisible(!modalVisible);
-                  }}>
-                    <Text style={style.item}>Shipper</Text>
-                  </TouchableOpacity>
-                </View>
-                <Icon name='arrow-forward-ios' />
-              </View>
-
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Icon name='logout' size={25} color={COLORS.white} />
                   <TouchableOpacity onPress={() => {
                     AsyncStorage.clear();
@@ -359,7 +347,9 @@ const HomeScreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
         </View>
-        <Slider images={images} />
+        <Suspense fallback={<Text>Loading...</Text>}>
+          <Slider images={images} />
+        </Suspense>
 
         <View style={style.groupProductContainer}>
           <View style={style.highlightProduct}>

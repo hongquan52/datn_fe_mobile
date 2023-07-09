@@ -58,11 +58,10 @@ const HistoryOrderScreen = ({navigation}) => {
   useEffect( async () => {
     const userID = await AsyncStorage.getItem("userId");
     const userID2 = parseInt(userID)
-    console.log("const userID: ", typeof(userID), userID)
-    console.log("const userID2: ", typeof(userID2), userID2);
+    
 
     // CALL API GET ORDER BY USER ID
-    axios.get(`${BaseURL}/api/v1/order?userId=${userID2}`)
+    axios.get(`${BaseURL}/api/v1/order/user?userId=${userID2}`)
       .then( async (res) => {
         setData(res.data);
         setDataOriginal(res.data);

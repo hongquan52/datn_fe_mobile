@@ -19,16 +19,26 @@ import { BaseURL } from '../../consts/BaseURL';
 
 const FirstRoute = () => {
   const navigation = useNavigation();
+  const [loading, setLoading] = React.useState(false);
 
   // DELIVERY STATE
   const [deliveryData, setDeliveryData] = React.useState([]);
   // GET ALL DELIVERY BY SHIPPER
   React.useEffect(() => {
     let shipperID = 6;
+
+    setLoading(true);
     axios.get(`${BaseURL}/api/v1/delivery/shipper?shipperId=${shipperID}`)
       .then((res) => setDeliveryData(res.data))
       .catch((err) => console.log(err))
+      .finally(() => setLoading(false))
   }, [])
+
+  if(loading) {
+    return (
+      <Text>Loading...</Text>
+    )
+  }
 
   return (
     <View style={[styles.container, { backgroundColor: COLORS.light }]}>
@@ -46,7 +56,7 @@ const FirstRoute = () => {
                   <View style={{flexDirection: 'row', backgroundColor: COLORS.white, alignItems: 'center', borderBottomColor: COLORS.dark,
                       borderBottomWidth: 0.5, marginHorizontal: 10, justifyContent: 'space-between'}}>
                     <View style={{marginVertical: 10, height: 120, justifyContent: 'space-between', paddingLeft: 10}}>
-                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.orderId}</Text>
+                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.id}</Text>
                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>Price: {order.totalPrice}</Text>
                       { order.status ==='Wait_Delivering' &&
                         <Text style={{fontSize: 16, backgroundColor: '#F9813A', width: 90, padding: 5, color: 'white'}}
@@ -55,7 +65,10 @@ const FirstRoute = () => {
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Icon name='location-on' size={25} />
                         <Text style={{fontSize: 16, width: 300}}>
-                          {order.deliveryApartmentNumber+", "+order.deliveryWard+', '+order.deliveryDistrict+', '+order.deliveryProvince}
+                          {order.deliveryApartmentNumber}
+                          , {order.deliveryWard[0] === '{' ? JSON.parse(order.deliveryWard).ward_name : order.deliveryWard}
+                          , {order.deliveryDistrict[0] === '{' ? JSON.parse(order.deliveryDistrict).district_name : order.deliveryDistrict}
+                          , {order.deliveryProvince}
                         </Text>
                       </View>
                     </View>
@@ -107,7 +120,7 @@ const SecondRoute = () => {
                   <View style={{flexDirection: 'row', backgroundColor: COLORS.white, alignItems: 'center', borderBottomColor: COLORS.dark,
                       borderBottomWidth: 0.5, marginHorizontal: 10, justifyContent: 'space-between'}}>
                     <View style={{marginVertical: 10, height: 120, justifyContent: 'space-between', paddingLeft: 10}}>
-                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.orderId}</Text>
+                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.id}</Text>
                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>Price: {order.totalPrice}</Text>
                       { order.status ==='Delivering' &&
                         <Text style={{fontSize: 16, backgroundColor: '#F9813A', width: 90, padding: 5, color: 'white'}}
@@ -116,7 +129,10 @@ const SecondRoute = () => {
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Icon name='location-on' size={25} />
                         <Text style={{fontSize: 16, width: 300}}>
-                          {order.deliveryApartmentNumber+", "+order.deliveryWard+', '+order.deliveryDistrict+', '+order.deliveryProvince}
+                          {order.deliveryApartmentNumber}
+                          , {order.deliveryWard[0] === '{' ? JSON.parse(order.deliveryWard).ward_name : order.deliveryWard}
+                          , {order.deliveryDistrict[0] === '{' ? JSON.parse(order.deliveryDistrict).district_name : order.deliveryDistrict}
+                          , {order.deliveryProvince}
                         </Text>
                       </View>
                     </View>
@@ -167,7 +183,7 @@ const ThirdRoute = () => {
                   <View style={{flexDirection: 'row', backgroundColor: COLORS.white, alignItems: 'center', borderBottomColor: COLORS.dark,
                       borderBottomWidth: 0.5, marginHorizontal: 10, justifyContent: 'space-between'}}>
                     <View style={{marginVertical: 10, height: 120, justifyContent: 'space-between', paddingLeft: 10}}>
-                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.orderId}</Text>
+                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.id}</Text>
                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>Price: {order.totalPrice}</Text>
                       { order.status ==='Delivered' &&
                         <Text style={{fontSize: 16, backgroundColor: '#F9813A', width: 90, padding: 5, color: 'white'}}
@@ -176,7 +192,10 @@ const ThirdRoute = () => {
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Icon name='location-on' size={25} />
                         <Text style={{fontSize: 16, width: 300}}>
-                          {order.deliveryApartmentNumber+", "+order.deliveryWard+', '+order.deliveryDistrict+', '+order.deliveryProvince}
+                          {order.deliveryApartmentNumber}
+                          , {order.deliveryWard[0] === '{' ? JSON.parse(order.deliveryWard).ward_name : order.deliveryWard}
+                          , {order.deliveryDistrict[0] === '{' ? JSON.parse(order.deliveryDistrict).district_name : order.deliveryDistrict}
+                          , {order.deliveryProvince}
                         </Text>
                       </View>
                     </View>
@@ -227,7 +246,7 @@ const FourRoute = () => {
                   <View style={{flexDirection: 'row', backgroundColor: COLORS.white, alignItems: 'center', borderBottomColor: COLORS.dark,
                       borderBottomWidth: 0.5, marginHorizontal: 10, justifyContent: 'space-between'}}>
                     <View style={{marginVertical: 10, height: 120, justifyContent: 'space-between', paddingLeft: 10}}>
-                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.orderId}</Text>
+                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Delivery ID: {order.id}</Text>
                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>Price: {order.totalPrice}</Text>
                       { order.status ==='Done' &&
                         <Text style={{fontSize: 16, backgroundColor: 'green', width: 90, padding: 5, color: 'white'}}
@@ -236,7 +255,10 @@ const FourRoute = () => {
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Icon name='location-on' size={25} />
                         <Text style={{fontSize: 16, width: 300}}>
-                          {order.deliveryApartmentNumber+", "+order.deliveryWard+', '+order.deliveryDistrict+', '+order.deliveryProvince}
+                          {order.deliveryApartmentNumber}
+                          , {order.deliveryWard[0] === '{' ? JSON.parse(order.deliveryWard).ward_name : order.deliveryWard}
+                          , {order.deliveryDistrict[0] === '{' ? JSON.parse(order.deliveryDistrict).district_name : order.deliveryDistrict}
+                          , {order.deliveryProvince}
                         </Text>
                       </View>
                     </View>
@@ -287,7 +309,7 @@ const FiveRoute = () => {
                   <View style={{flexDirection: 'row', backgroundColor: COLORS.white, alignItems: 'center', borderBottomColor: COLORS.dark,
                       borderBottomWidth: 0.5, marginHorizontal: 10, justifyContent: 'space-between'}}>
                     <View style={{marginVertical: 10, height: 120, justifyContent: 'space-between', paddingLeft: 10}}>
-                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.orderId}</Text>
+                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.id}</Text>
                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>Price: {order.totalPrice}</Text>
                       { order.status ==='Cancel' &&
                         <Text style={{fontSize: 16, backgroundColor: 'red', width: 90, padding: 5, color: 'white'}}
@@ -296,7 +318,10 @@ const FiveRoute = () => {
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Icon name='location-on' size={25} />
                         <Text style={{fontSize: 16, width: 300}}>
-                          {order.deliveryApartmentNumber+", "+order.deliveryWard+', '+order.deliveryDistrict+', '+order.deliveryProvince}
+                          {order.deliveryApartmentNumber}
+                          , {order.deliveryWard[0] === '{' ? JSON.parse(order.deliveryWard).ward_name : order.deliveryWard}
+                          , {order.deliveryDistrict[0] === '{' ? JSON.parse(order.deliveryDistrict).district_name : order.deliveryDistrict}
+                          , {order.deliveryProvince}
                         </Text>
                       </View>
                     </View>
