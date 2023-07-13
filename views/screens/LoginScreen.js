@@ -47,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
         if(roleID === 3) {
           navigation.navigate("DashboardShipper");
         }
-        else if(roleID === 2) {
+        else if(roleID === 1) {
           navigation.navigate('HomeScreen');
         }
       })

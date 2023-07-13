@@ -87,13 +87,13 @@ const BottomNavigator = () => {
         }}
         />
         <Tab.Screen
-        name="Test"
+        name="Chat box"
         component={Counter}
         options={{
             tabBarIcon: ({color}) => (
                 <View style={{alignItems: 'center'}}>
-                    <Icon name='history' color={color} size={28} />
-                    <Text style={{fontSize: 11}}>Test</Text>
+                    <Icon name='chat-bubble' color={color} size={28} />
+                    <Text style={{fontSize: 11}}>Chat</Text>
                 </View>
             )
         }}
