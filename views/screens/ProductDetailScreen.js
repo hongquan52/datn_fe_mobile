@@ -217,7 +217,7 @@ const ProductDetailScreen = ({navigation, route}) => {
                             )}
                         />
                         
-                        <Text style={style.label}>Description</Text>
+                        <Text style={style.label}>Mô tả sản phẩm</Text>
                         <Controller
                             name="description"
                             defaultValue={""}
@@ -249,21 +249,21 @@ const ProductDetailScreen = ({navigation, route}) => {
                 }}>
                     <View style={style.centeredView}>
                         <View style={style.modalView}>
-                            <Text style={[style.modalText, {fontWeight: "bold"}]}>Notification</Text>
-                            <Text style={style.modalText}>You can't rate this product before purchased</Text>
+                            <Text style={[style.modalText, {fontWeight: "bold"}]}>Thông báo</Text>
+                            <Text style={style.modalText}>Bạn không thể đánh giá sản phẩm khi chưa mua hàng</Text>
                             <Image source={require('../../assets/error.gif')} style={{width: 150, height: 150}} />
                             <Pressable
                                 style={[style.button, style.buttonClose]}
                                 onPress={() => setModalFailedReviewVisible(!modalFailedReviewVisible)}
                             >
-                                <Text style={style.textStyle}>DONE</Text>
+                                <Text style={style.textStyle}>OK</Text>
                             </Pressable>
                         </View>
                     </View>
         </Modal>
         <View style={style.header}>
             <Icon name='arrow-back-ios' size={28} onPress={navigation.goBack} />
-            <Text style={{fontWeight: 'bold'}}>Product Details</Text>
+            <Text style={{fontWeight: 'bold'}}>Chi tiết sản phẩm</Text>
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{
@@ -288,8 +288,8 @@ const ProductDetailScreen = ({navigation, route}) => {
                     </Text>
                 </View>
                 <View style={{alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row'}}>
-                    <Text style={{fontWeight: 'bold', fontSize: 22, marginRight: 5}}>{item.price*((100-item.discount)/100)} VND</Text>
-                    <Text style={{textDecorationLine: 'line-through', fontSize: 22}}>{item.price} VND</Text>
+                    <Text style={{fontWeight: 'bold', fontSize: 22, marginRight: 5}}>{item.price*((100-item.discount)/100)} đ</Text>
+                    <Text style={{textDecorationLine: 'line-through', fontSize: 22}}>{item.price} đ</Text>
                     <View style={{backgroundColor: COLORS.white, height: 30, justifyContent: 'center', marginLeft: 20, padding: 5, borderRadius: 10}}>
                         <Text style={{ fontSize: 22, color: 'red', fontWeight: 'bold' }}>-{item.discount}%</Text>
                         
@@ -298,7 +298,7 @@ const ProductDetailScreen = ({navigation, route}) => {
                 {/* <Text style={{ fontSize: 22, color: 'red', fontWeight: 'bold' }}>{product.category}</Text>
                 <Text style={{ fontSize: 22, color: 'red', fontWeight: 'bold' }}>{product.groupProduct}</Text>
                 <Text style={{ fontSize: 22, color: 'red', fontWeight: 'bold' }}>{product.brand}</Text> */}
-                <Text style={{fontWeight: 'bold', fontSize: 18, marginTop: 20, marginBottom: 5}}>Description</Text>
+                <Text style={{fontWeight: 'bold', fontSize: 18, marginTop: 20, marginBottom: 5}}>Mô tả sản phẩm</Text>
                 <View style={{borderColor: COLORS.white, borderWidth: 1, padding: 10, borderRadius: 5}} >
                     <Text style={{height: summaryText ? 200 : 50, lineHeight: 30}}>
                         Xem tất cả các ưu đãi mua kèm tại đây:
@@ -315,18 +315,18 @@ const ProductDetailScreen = ({navigation, route}) => {
                     <TouchableOpacity
                         style={{alignItems: 'center'}}
                         onPress={() => setSummaryText(!summaryText)}>
-                            <Text style={{fontSize: 16 , fontWeight: 500, color: COLORS.white}}>View more</Text>
+                            <Text style={{fontSize: 16 , fontWeight: 500, color: COLORS.white}}>Mở rộng</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={style.rating}>
                     <View style={style.rating__header}>
                         <View style={{alignItems: 'center'}}>
-                            <Text style={{fontWeight: 'bold', fontSize: 18, marginVertical: 5}}>Review product</Text>
+                            <Text style={{fontWeight: 'bold', fontSize: 18, marginVertical: 5}}>Đánh giá sản phẩm</Text>
                             {
                                 totalRating === 0 ?
-                                <Text>0/5 ({review.length} reviews)</Text>
+                                <Text>0/5 ({review.length} đánh giá)</Text>
                                 :
-                                <Text>{totalRating/review.length}/5 ({review.length} reviews)</Text>
+                                <Text>{totalRating/review.length}/5 ({review.length} đánh giá)</Text>
                             }
                             <Rating 
                                     imageSize={16}
@@ -379,7 +379,7 @@ const ProductDetailScreen = ({navigation, route}) => {
                         </View>
                         <View style={{flexDirection: 'row',marginBottom: 5, alignItems: 'center'}}>
                             <TouchableOpacity onPress={() => navigation.navigate('ReviewProductScreen', item.id)}>
-                                <Text style={{fontSize: 16}}>Show all</Text>
+                                <Text style={{fontSize: 16}}>Xem thêm</Text>
                             </TouchableOpacity>
                             
                             <Icon name='arrow-forward-ios' size={20} />
@@ -413,7 +413,7 @@ const ProductDetailScreen = ({navigation, route}) => {
                             </View>
                         ))}
                         <TouchableOpacity style={{alignItems: 'center', paddingBottom: 10}} onPress={() => setModalVisible(true)}>
-                            <Text style={{fontWeight: 500, fontSize: 18, color: COLORS.primary}}>Write review...</Text>
+                            <Text style={{fontWeight: 500, fontSize: 18, color: COLORS.primary}}>Đánh giá</Text>
                         </TouchableOpacity>
                         
                     </View>

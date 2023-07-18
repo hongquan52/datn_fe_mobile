@@ -22,6 +22,7 @@ const DeliveryDetailScreen = ({ navigation, route }) => {
 
     const [modalPhotoVisible, setModalPhotoVisible] = useState(false);
 
+
     // IMAGE PICKER
     const [localUri, setLocalUri] = useState('');
     const [filename, setFilename] = useState('');
@@ -89,13 +90,15 @@ const DeliveryDetailScreen = ({ navigation, route }) => {
 
     // RECEIVED DELIVERY FUNCTION
     const receivedDelivery = (x) => {
+        setLoading(true);
         axios.put(`${BaseURL}/api/v1/order/updateStatus?orderId=${item.orderId}&orderStatus=${x}`)
             .then((res) => {
-                console.log(res.data.message);
+                
                 navigation.navigate('DashboardShipper');
                 navigation.navigate('TestScreen');
             })
             .catch((err) => console.log(err))
+            .finally(() => setLoading(false))
     }
     useEffect(() => {
         setLoading(true);
@@ -114,7 +117,10 @@ const DeliveryDetailScreen = ({ navigation, route }) => {
     if(loading) {
         return (
             <SafeAreaView style={{justifyContent: 'center' , alignItems: 'center'}}>
-                <Text>Loading...</Text>
+                <View style={{marginTop: 100, alignItems: 'center'}}>
+                    <Text style={{fontSize: 24, fontWeight: 'bold'}}>Đang tiến hành cập nhật đơn hàng</Text>
+                    <Text>Loading...</Text>
+                </View>
             </SafeAreaView>
         )
     }
@@ -131,7 +137,7 @@ const DeliveryDetailScreen = ({ navigation, route }) => {
                 }}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={[styles.modalText, { fontWeight: "bold" }]}>Choose photo from</Text>
+                        <Text style={[styles.modalText, { fontWeight: "bold" }]}>Chọn ảnh</Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 30 }}>
                             <TouchableOpacity style={{ padding: 5, borderRadius: 5, marginTop: 5, flexDirection: "row", alignItems: "center", justifyContent: "center" }}
                                 onPress={() => takePhoto()}
@@ -156,13 +162,13 @@ const DeliveryDetailScreen = ({ navigation, route }) => {
             </Modal>
             <View style={styles.header}>
                 <Icon name='arrow-back-ios' size={28} onPress={navigation.goBack} />
-                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Delivery detail</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Chi tiết đơn giao</Text>
             </View>
             <ScrollView
                 style={{ height: '100%' }}
             >
                 <View style={{ marginHorizontal: 10 }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Product list</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Danh sách sản phẩm</Text>
                     {
                         productDelivery.map((item) => (
                             <View
@@ -184,9 +190,9 @@ const DeliveryDetailScreen = ({ navigation, route }) => {
                             </View>
                         ))
                     }
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginTop: 10, marginBottom: 10 }}>Customer information</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginTop: 10, marginBottom: 10 }}>Thông tin khách hàng</Text>
                     <Text style={{ fontSize: 16 }}>{'Name: ' + item.userName + "   " + 'Phone: ' + item.userPhone}</Text>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginTop: 10 }}>Address Delivery</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', marginTop: 10 }}>Địa chỉ giao</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.light, paddingVertical: 10, borderRadius: 10 }}>
                         <Icon name='location-on' size={25} />
                         <View style={{ marginLeft: 10, width: 280 }}>
@@ -205,7 +211,7 @@ const DeliveryDetailScreen = ({ navigation, route }) => {
                         }
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Note</Text>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Lưu ý</Text>
                         <TextInput
                             editable={false}
                             multiline
@@ -216,14 +222,14 @@ const DeliveryDetailScreen = ({ navigation, route }) => {
                     </View>
 
                     <View style={{ borderTopColor: COLORS.dark, borderTopWidth: 1, marginTop: 30, flexDirection: 'row', justifyContent: 'space-between', paddingTop: 10 }}>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Price</Text>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold', textDecorationLine: paymentMethod === 'VNPAY' ? 'line-through' : 'none' }}>{item.totalPrice}$</Text>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Giá</Text>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', textDecorationLine: paymentMethod === 'VNPAY' ? 'line-through' : 'none' }}>{item.totalPrice}đ</Text>
 
                     </View>
                     {
                         paymentMethod === 'VNPAY' &&
                         <View style={{ marginTop: 0, flexDirection: 'row', justifyContent: 'flex-end', paddingTop: 10 }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#df2020' }}>0$</Text>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#df2020' }}>0đ</Text>
 
                         </View>
                     }
@@ -234,12 +240,12 @@ const DeliveryDetailScreen = ({ navigation, route }) => {
                         <TouchableOpacity onPress={() => setModalPhotoVisible(true)}>
                             <View style={styles.addPhoto_btn}>
                                 <Icon name='add-photo-alternate' size={20} color={COLORS.primary} />
-                                <Text style={{ fontSize: 20, color: COLORS.primary }}>Add photo</Text>
+                                <Text style={{ fontSize: 20, color: COLORS.primary }}>Thêm ảnh</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => updatePhotoDelivery()}>
                             <View style={styles.addPhoto_btn}>
-                                <Text style={{ fontSize: 20, color: COLORS.primary }}>Save</Text>
+                                <Text style={{ fontSize: 20, color: COLORS.primary }}>Lưu</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -269,7 +275,7 @@ const DeliveryDetailScreen = ({ navigation, route }) => {
     )
 }
 const buttonItems = [
-    { id: 1, title: 'Delivering', backgroundColor: '#259fff', color: 'white', icon: 'truck-fast-outline' },
+    // { id: 1, title: 'Delivering', backgroundColor: '#259fff', color: 'white', icon: 'truck-fast-outline' },
     { id: 2, title: 'Delivered', backgroundColor: '#00a86b', color: 'white', icon: 'truck-check' },
     { id: 3, title: 'Cancel', backgroundColor: COLORS.secondary, color: '#df2020', icon: 'truck-remove' },
 ]

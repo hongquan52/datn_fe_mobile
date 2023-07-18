@@ -61,7 +61,7 @@ const NewPasswordScreen = ({navigation, route}) => {
             <View style={styles.modalView}>
               <Text style={styles.modalTitle}>Notification</Text> 
               <Image source={require('../../assets/error.gif')} style={{width: 150, height: 150}} />
-              <Text style={styles.modalText}>The password does't match with confirm password</Text>
+              <Text style={styles.modalText}>Mật khẩu không trùng khớp</Text>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
@@ -72,7 +72,7 @@ const NewPasswordScreen = ({navigation, route}) => {
           </View>
       </Modal>
       <View style={styles.container}>  
-        <Text style={styles.label}>Password</Text>
+        <Text style={styles.label}>Mật khẩu</Text>
         <Controller
           name="password"
           defaultValue={''}
@@ -80,15 +80,15 @@ const NewPasswordScreen = ({navigation, route}) => {
           rules={{
             required: {
               value: true,
-              message: 'The password is required'
+              message: 'Mật khẩu không được trống'
             },
             minLength: {
               value: 8,
-              message: 'The password > 8 characterss'
+              message: 'Mật khẩu trên 8 kí tự'
             },
             maxLength: {
               value: 16,
-              message: 'The password < 16 characterss'
+              message: 'Mật khẩu dưới 16 kí tự'
             },
           }}
           render={({ field: { value, onChange, onBlur } }) => (
@@ -115,7 +115,7 @@ const NewPasswordScreen = ({navigation, route}) => {
           )}
         />
         {errors.password && <Text style={styles.textDanger}>{errors.password.message}</Text>}
-        <Text style={styles.label}>Password again</Text>
+        <Text style={styles.label}>Nhập lại mật khẩu</Text>
         <Controller
           name="passwordAgain"
           defaultValue={''}
@@ -123,15 +123,15 @@ const NewPasswordScreen = ({navigation, route}) => {
           rules={{
             required: {
               value: true,
-              message: 'The password is required'
+              message: 'Mật khẩu bắt buộc'
             },
             minLength: {
               value: 8,
-              message: 'The password > 8 characterss'
+              message: 'Mật khẩu trên 8 kí tự'
             },
             maxLength: {
               value: 16,
-              message: 'The password < 16 characterss'
+              message: 'Mật khẩu trên 16 kí tự'
             },
           }}
           render={({ field: { value, onChange, onBlur } }) => (
@@ -145,7 +145,7 @@ const NewPasswordScreen = ({navigation, route}) => {
               onBlur={onBlur}
               secureTextEntry={hidePassword}
               focusable
-              placeholder="Enter password again"
+              placeholder="Nhập lại mât khẩu"
             />
             <TouchableOpacity>
               {
@@ -159,7 +159,7 @@ const NewPasswordScreen = ({navigation, route}) => {
         />
         {errors.passwordAgain && <Text style={styles.textDanger}>{errors.passwordAgain.message}</Text>}
         <View style={{marginTop: 50}}>
-            <PrimaryButton title={'Save password'} onPress={handleSubmit(onSubmit)} />
+            <PrimaryButton title={'Lưu mật khẩu'} onPress={handleSubmit(onSubmit)} />
         </View>
       </View>
     </SafeAreaView>

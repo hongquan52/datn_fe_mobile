@@ -13,7 +13,7 @@ const OnBoardScreen = ({ navigation }) => {
                 resizeMode: 'contain',
                 top: -150
             }} 
-            source={require('../../assets/onboardImage.png')} />
+            source={require('../../assets/pc-gamer-gaming-logo-mouse-pad.jpg')} />
         </View>
         <View style={style.textContainer}>
             <View>
@@ -24,7 +24,7 @@ const OnBoardScreen = ({ navigation }) => {
                         textAlign: 'center',
                         
                     }}
-                >ShopLinhKienMayTinh</Text>
+                >QL Shop</Text>
                 <Text
                     style={{
                         fontSize: 18,
@@ -32,7 +32,7 @@ const OnBoardScreen = ({ navigation }) => {
                         textAlign: 'center',
                         color: COLORS.grey,
                     }}
-                > Mang den cho khach hang su yen tam nhat !!!</Text>
+                > Luôn mang đến cho khách hàng sự yên tâm</Text>
             </View>
             <View style={style.indicatorContainer}>
                     <View style={style.currentIndicator}></View>
@@ -41,7 +41,7 @@ const OnBoardScreen = ({ navigation }) => {
             </View>
             <PrimaryButton 
                 onPress={() => navigation.navigate('LoginScreen')}
-                title={"Get Started"}
+                title={"Khám phá ngay"}
             />
             
         </View>

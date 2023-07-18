@@ -126,7 +126,7 @@ const VoucherScreen = ({ navigation }) => {
                             <Animated.Text style={{ transform: [{ scale: scale }] }}>
                                 <View>
                                     <Icon name='delete' size={40} color={COLORS.white} />
-                                    <Text style={{ fontWeight: 'bold', color: COLORS.white }}>Delete</Text>
+                                    <Text style={{ fontWeight: 'bold', color: COLORS.white }}>Xóa</Text>
                                 </View>
                             </Animated.Text>
                         </View>

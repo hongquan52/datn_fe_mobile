@@ -34,7 +34,7 @@ const ResetPasswordScreen = ({ navigation }) => {
         axios.post(`${BaseURL}/auth/login`, formdata)
             .then((res) => {
                 if (res.data.status === 'UNAUTHORIZED') {
-                    alert("Verify code is incorrect! Please enter again");
+                    alert("Mã xác thực không chính xác! Vui lòng nhập lại");
                 }
                 else {
                     let xyz = decoded(res.data.data.accessToken);
@@ -61,7 +61,7 @@ const ResetPasswordScreen = ({ navigation }) => {
                     alert(res.data.message);
                 }
                 else {
-                    alert('Please check your email to get verify code!!')
+                    alert('Vui lòng kiểm tra email để lấy mã xác thực')
                 }
             })
             .catch((err) => console.log(err))
@@ -76,21 +76,21 @@ const ResetPasswordScreen = ({ navigation }) => {
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalTitle}>Notification</Text>
+                        <Text style={styles.modalTitle}>Thông báo</Text>
                         <Image source={require('../../assets/error.gif')} style={{ width: 150, height: 150 }} />
-                        <Text style={styles.modalText}>The phone or password is<Text style={{ color: 'red' }}> incorrect</Text>
-                            . Please enter again</Text>
+                        <Text style={styles.modalText}>Số điện thoại hoặc mật khẩu<Text style={{ color: 'red' }}> không chính xác</Text>
+                            . Vui lòng nhập lại</Text>
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => setModalVisible(!modalVisible)}
                         >
-                            <Text style={styles.textStyle}>OK</Text>
+                            <Text style={styles.textStyle}>Đồng ý</Text>
                         </Pressable>
                     </View>
                 </View>
             </Modal>
             <View style={{ alignItems: 'center', marginTop: 70 }}>
-                <Text>Reset password</Text>
+                <Text>Đặt lại mật khẩu</Text>
             </View>
             <View style={styles.container}>
                 <Text style={styles.label}>Email</Text>
@@ -101,7 +101,7 @@ const ResetPasswordScreen = ({ navigation }) => {
                     rules={{
                         required: {
                             value: true,
-                            message: 'The email is required'
+                            message: 'Email không được để trống'
                         },
                     }}
                     render={({ field: { value, onChange, onBlur } }) => (
@@ -114,13 +114,13 @@ const ResetPasswordScreen = ({ navigation }) => {
                                 value={value}
                                 onBlur={onBlur}
                                 focusable
-                                placeholder="Enter email"
+                                placeholder="Nhập Email"
                             />
                         </View>
                     )}
                 />
                 {errors.email && <Text style={styles.textDanger}>{errors.email.message}</Text>}
-                <Text style={styles.label}>Phone</Text>
+                <Text style={styles.label}>Số điện thoại</Text>
                 <Controller
                     name="phone"
                     defaultValue={''}
@@ -128,7 +128,7 @@ const ResetPasswordScreen = ({ navigation }) => {
                     rules={{
                         required: {
                             value: true,
-                            message: 'The phone is required'
+                            message: 'SĐT không được để trống'
                         },
 
                     }}
@@ -143,14 +143,14 @@ const ResetPasswordScreen = ({ navigation }) => {
                                 onBlur={onBlur}
 
                                 focusable
-                                placeholder="Enter phone"
+                                placeholder="Nhập số điện thoại"
                             />
 
                         </View>
                     )}
                 />
                 {errors.phone && <Text style={styles.textDanger}>{errors.phone.message}</Text>}
-                <Text style={styles.label}>Verify conde</Text>
+                <Text style={styles.label}>Mã xác thực</Text>
                 <Controller
                     name="verifyCode"
                     defaultValue={''}
@@ -175,11 +175,11 @@ const ResetPasswordScreen = ({ navigation }) => {
                 />
                 <View style={{ justifyContent: "flex-end", flexDirection: "row", marginRight: 10 }}>
                     <TouchableOpacity onPress={handleSubmit(getVerifyCode)} >
-                        <Text style={{ fontSize: 16, color: COLORS.primary }}>Get verify code</Text>
+                        <Text style={{ fontSize: 16, color: COLORS.primary }}>Lấy mã xác thực</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ marginTop: 20 }}>
-                    <PrimaryButton title={'Login'} onPress={handleSubmit(nextStep)} />
+                    <PrimaryButton title={'Tiếp tục'} onPress={handleSubmit(nextStep)} />
 
                 </View>
             </View>

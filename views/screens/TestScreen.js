@@ -17,84 +17,84 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { BaseURL } from '../../consts/BaseURL';
 
-const FirstRoute = () => {
-  const navigation = useNavigation();
-  const [loading, setLoading] = React.useState(false);
+// const FirstRoute = () => {
+//   const navigation = useNavigation();
+//   const [loading, setLoading] = React.useState(false);
 
-  // DELIVERY STATE
-  const [deliveryData, setDeliveryData] = React.useState([]);
-  // GET ALL DELIVERY BY SHIPPER
-  React.useEffect(() => {
-    let shipperID = 6;
+//   // DELIVERY STATE
+//   const [deliveryData, setDeliveryData] = React.useState([]);
+//   // GET ALL DELIVERY BY SHIPPER
+//   React.useEffect(() => {
+//     let shipperID = 6;
 
-    setLoading(true);
-    axios.get(`${BaseURL}/api/v1/delivery/shipper?shipperId=${shipperID}`)
-      .then((res) => setDeliveryData(res.data))
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false))
-  }, [])
+//     setLoading(true);
+//     axios.get(`${BaseURL}/api/v1/delivery/shipper?shipperId=${shipperID}`)
+//       .then((res) => setDeliveryData(res.data))
+//       .catch((err) => console.log(err))
+//       .finally(() => setLoading(false))
+//   }, [])
 
-  if(loading) {
-    return (
-      <Text>Loading...</Text>
-    )
-  }
+//   if(loading) {
+//     return (
+//       <Text>Loading...</Text>
+//     )
+//   }
 
-  return (
-    <View style={[styles.container, { backgroundColor: COLORS.light }]}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-      >
-        {
-          deliveryData.map((order, index) => {
-            if(order.status === 'Wait_Delivering') {
+//   return (
+//     <View style={[styles.container, { backgroundColor: COLORS.light }]}>
+//       <ScrollView
+//         showsVerticalScrollIndicator={false}
+//       >
+//         {
+//           deliveryData.map((order, index) => {
+//             if(order.status === 'Wait_Delivering') {
   
-              return (
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('DeliveryDetailScreen', order)}
-                >
-                  <View style={{flexDirection: 'row', backgroundColor: COLORS.white, alignItems: 'center', borderBottomColor: COLORS.dark,
-                      borderBottomWidth: 0.5, marginHorizontal: 10, justifyContent: 'space-between'}}>
-                    <View style={{marginVertical: 10, height: 120, justifyContent: 'space-between', paddingLeft: 10}}>
-                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.id}</Text>
-                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Price: {order.totalPrice}</Text>
-                      { order.status ==='Wait_Delivering' &&
-                        <Text style={{fontSize: 16, backgroundColor: '#F9813A', width: 90, padding: 5, color: 'white'}}
-                        >Wait delivery</Text>
-                      }
-                      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon name='location-on' size={25} />
-                        <Text style={{fontSize: 16, width: 300}}>
-                          {order.deliveryApartmentNumber}
-                          , {order.deliveryWard[0] === '{' ? JSON.parse(order.deliveryWard).ward_name : order.deliveryWard}
-                          , {order.deliveryDistrict[0] === '{' ? JSON.parse(order.deliveryDistrict).district_name : order.deliveryDistrict}
-                          , {order.deliveryProvince}
-                        </Text>
-                      </View>
-                    </View>
-                    <View>
-                      <Icon
-                        style={{marginRight: 5}}
-                        name='arrow-forward-ios'
-                        size={30}/>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              )
-            }
-            else {
-              return (
-                null
-              )
-            }
-          }
+//               return (
+//                 <TouchableOpacity
+//                   onPress={() => navigation.navigate('DeliveryDetailScreen', order)}
+//                 >
+//                   <View style={{flexDirection: 'row', backgroundColor: COLORS.white, alignItems: 'center', borderBottomColor: COLORS.dark,
+//                       borderBottomWidth: 0.5, marginHorizontal: 10, justifyContent: 'space-between'}}>
+//                     <View style={{marginVertical: 10, height: 120, justifyContent: 'space-between', paddingLeft: 10}}>
+//                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.id}</Text>
+//                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>Price: {order.totalPrice}</Text>
+//                       { order.status ==='Wait_Delivering' &&
+//                         <Text style={{fontSize: 16, backgroundColor: '#F9813A', width: 90, padding: 5, color: 'white'}}
+//                         >Wait delivery</Text>
+//                       }
+//                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//                         <Icon name='location-on' size={25} />
+//                         <Text style={{fontSize: 16, width: 300}}>
+//                           {order.deliveryApartmentNumber}
+//                           , {order.deliveryWard[0] === '{' ? JSON.parse(order.deliveryWard).ward_name : order.deliveryWard}
+//                           , {order.deliveryDistrict[0] === '{' ? JSON.parse(order.deliveryDistrict).district_name : order.deliveryDistrict}
+//                           , {order.deliveryProvince}
+//                         </Text>
+//                       </View>
+//                     </View>
+//                     <View>
+//                       <Icon
+//                         style={{marginRight: 5}}
+//                         name='arrow-forward-ios'
+//                         size={30}/>
+//                     </View>
+//                   </View>
+//                 </TouchableOpacity>
+//               )
+//             }
+//             else {
+//               return (
+//                 null
+//               )
+//             }
+//           }
             
-          )
-        }
-      </ScrollView>
-    </View>
-  );
-}
+//           )
+//         }
+//       </ScrollView>
+//     </View>
+//   );
+// }
 const SecondRoute = () => {
   const navigation = useNavigation();
 
@@ -124,7 +124,7 @@ const SecondRoute = () => {
                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>Price: {order.totalPrice}</Text>
                       { order.status ==='Delivering' &&
                         <Text style={{fontSize: 16, backgroundColor: '#F9813A', width: 90, padding: 5, color: 'white'}}
-                        >Wait delivery</Text>
+                        >Đang giao</Text>
                       }
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Icon name='location-on' size={25} />
@@ -186,8 +186,8 @@ const ThirdRoute = () => {
                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.id}</Text>
                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>Price: {order.totalPrice}</Text>
                       { order.status ==='Delivered' &&
-                        <Text style={{fontSize: 16, backgroundColor: '#F9813A', width: 90, padding: 5, color: 'white'}}
-                        >Wait delivery</Text>
+                        <Text style={{fontSize: 16, backgroundColor: 'blue', width: 90, padding: 5, color: 'white'}}
+                        >Đã giao</Text>
                       }
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Icon name='location-on' size={25} />
@@ -250,7 +250,7 @@ const FourRoute = () => {
                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>Price: {order.totalPrice}</Text>
                       { order.status ==='Done' &&
                         <Text style={{fontSize: 16, backgroundColor: 'green', width: 90, padding: 5, color: 'white'}}
-                        >Done</Text>
+                        >Hoàn tất</Text>
                       }
                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Icon name='location-on' size={25} />
@@ -284,80 +284,80 @@ const FourRoute = () => {
     </View>
   )
 }
-const FiveRoute = () => {
-  const navigation = useNavigation();
+// const FiveRoute = () => {
+//   const navigation = useNavigation();
 
-  // DELIVERY STATE
-  const [deliveryData, setDeliveryData] = React.useState([]);
-  // GET ALL DELIVERY BY SHIPPER
-  React.useEffect(() => {
-    let shipperID = 6;
-    axios.get(`${BaseURL}/api/v1/delivery/shipper?shipperId=${shipperID}`)
-      .then((res) => setDeliveryData(res.data))
-      .catch((err) => console.log(err))
-  }, [])
-  return (
-    <View style={[styles.container, { backgroundColor: COLORS.light }]}>
-      {
-        deliveryData.map((order, index) => {
-          if(order.status === 'Cancel') {
+//   // DELIVERY STATE
+//   const [deliveryData, setDeliveryData] = React.useState([]);
+//   // GET ALL DELIVERY BY SHIPPER
+//   React.useEffect(() => {
+//     let shipperID = 6;
+//     axios.get(`${BaseURL}/api/v1/delivery/shipper?shipperId=${shipperID}`)
+//       .then((res) => setDeliveryData(res.data))
+//       .catch((err) => console.log(err))
+//   }, [])
+//   return (
+//     <View style={[styles.container, { backgroundColor: COLORS.light }]}>
+//       {
+//         deliveryData.map((order, index) => {
+//           if(order.status === 'Cancel') {
 
-            return (
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('DeliveryDetailScreen', order)}
-                >
-                  <View style={{flexDirection: 'row', backgroundColor: COLORS.white, alignItems: 'center', borderBottomColor: COLORS.dark,
-                      borderBottomWidth: 0.5, marginHorizontal: 10, justifyContent: 'space-between'}}>
-                    <View style={{marginVertical: 10, height: 120, justifyContent: 'space-between', paddingLeft: 10}}>
-                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.id}</Text>
-                      <Text style={{fontSize: 16, fontWeight: 'bold'}}>Price: {order.totalPrice}</Text>
-                      { order.status ==='Cancel' &&
-                        <Text style={{fontSize: 16, backgroundColor: 'red', width: 90, padding: 5, color: 'white'}}
-                        >Cancel</Text>
-                      }
-                      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon name='location-on' size={25} />
-                        <Text style={{fontSize: 16, width: 300}}>
-                          {order.deliveryApartmentNumber}
-                          , {order.deliveryWard[0] === '{' ? JSON.parse(order.deliveryWard).ward_name : order.deliveryWard}
-                          , {order.deliveryDistrict[0] === '{' ? JSON.parse(order.deliveryDistrict).district_name : order.deliveryDistrict}
-                          , {order.deliveryProvince}
-                        </Text>
-                      </View>
-                    </View>
-                    <View>
-                      <Icon
-                        style={{marginRight: 5}}
-                        name='arrow-forward-ios'
-                        size={30}/>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-            )
-          }
-          else {
-            return (
-              null
-            )
-          }
-        }
+//             return (
+//                 <TouchableOpacity
+//                   onPress={() => navigation.navigate('DeliveryDetailScreen', order)}
+//                 >
+//                   <View style={{flexDirection: 'row', backgroundColor: COLORS.white, alignItems: 'center', borderBottomColor: COLORS.dark,
+//                       borderBottomWidth: 0.5, marginHorizontal: 10, justifyContent: 'space-between'}}>
+//                     <View style={{marginVertical: 10, height: 120, justifyContent: 'space-between', paddingLeft: 10}}>
+//                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>Deilvery ID: {order.id}</Text>
+//                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>Price: {order.totalPrice}</Text>
+//                       { order.status ==='Cancel' &&
+//                         <Text style={{fontSize: 16, backgroundColor: 'red', width: 90, padding: 5, color: 'white'}}
+//                         >Cancel</Text>
+//                       }
+//                       <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//                         <Icon name='location-on' size={25} />
+//                         <Text style={{fontSize: 16, width: 300}}>
+//                           {order.deliveryApartmentNumber}
+//                           , {order.deliveryWard[0] === '{' ? JSON.parse(order.deliveryWard).ward_name : order.deliveryWard}
+//                           , {order.deliveryDistrict[0] === '{' ? JSON.parse(order.deliveryDistrict).district_name : order.deliveryDistrict}
+//                           , {order.deliveryProvince}
+//                         </Text>
+//                       </View>
+//                     </View>
+//                     <View>
+//                       <Icon
+//                         style={{marginRight: 5}}
+//                         name='arrow-forward-ios'
+//                         size={30}/>
+//                     </View>
+//                   </View>
+//                 </TouchableOpacity>
+//             )
+//           }
+//           else {
+//             return (
+//               null
+//             )
+//           }
+//         }
           
-        )
-      }
-    </View>
-  )
-}
+//         )
+//       }
+//     </View>
+//   )
+// }
 
 export default class TestScreen  extends React.Component {
   
   state = {
     index: 0,
     routes: [
-      { key: 'first', title: 'Wait delivery' },
+      // { key: 'first', title: 'Wait delivery' },
       { key: 'second', title: 'Delivering' },
       { key: 'third', title: 'Delivered' },
       { key: 'four', title: 'Done' },
-      { key: 'five', title: 'Cancel' },
+      // { key: 'five', title: 'Cancel' },
     ],
   };
 
@@ -405,11 +405,11 @@ export default class TestScreen  extends React.Component {
   };
 
   _renderScene = SceneMap({
-    first: FirstRoute,
+    // first: FirstRoute,
     second: SecondRoute,
     third: ThirdRoute,
     four: FourRoute,
-    five: FiveRoute,
+    // five: FiveRoute,
   });
 
   render() {

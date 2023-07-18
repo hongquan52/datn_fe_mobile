@@ -28,6 +28,8 @@ import axios from "axios";
 import { BaseURL } from "../../../consts/BaseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScrollView } from "react-native-gesture-handler";
+
+
 const { width } = Dimensions.get('window');
 
 const CustomerInfoScreen = ({ navigation }) => {
@@ -137,7 +139,10 @@ const CustomerInfoScreen = ({ navigation }) => {
       .then((res) => {
         setUser(res.data);
         axios.get(`${BaseURL}/api/v1/user/image?filename=${res.data.image}`)
-          .then((res) => setUserAvatar(res.data))
+          .then((res) => {
+            setUserAvatar(res.data);
+            
+          })
           .catch((err) => console.log(err))
         // setUserRank(res.data.rank);
         // setUserRole(res.data.role);
@@ -229,7 +234,7 @@ const CustomerInfoScreen = ({ navigation }) => {
             </TouchableOpacity>
             <View style={styles.rankModalContainer}>
               <View style={styles.rankTitle}>
-                <Text style={{fontWeight: "bold", fontSize: 20}}>Policy</Text>
+                <Text style={{fontWeight: "bold", fontSize: 20}}>Chính sách tích lũy điểm</Text>
                 <Text style={{width: 300}}>Khi mua sản phẩm ở cửa hàng, với mỗi 100K trong tổng thanh toán khách hàng đã mua sắm sẽ được tích lũy 1 điểm</Text>
               </View>
               <View style={styles.rankDescription}>
@@ -237,7 +242,7 @@ const CustomerInfoScreen = ({ navigation }) => {
                 <View style={styles.rankItem}>
                   <Image source={BronzeRank} style={{height: 60, width: 60, marginHorizontal: 10}} />
                   <View style={{marginHorizontal: 10}}>
-                    <Text style={{fontWeight: 'bold'}}>Bronze</Text>
+                    <Text style={{fontWeight: 'bold'}}>Đồng</Text>
                     <Text style={{width: 200}}>Khi điểm tích lũy của khách hàng đạt mức dưới 50 điểm. Mức ưu đãi là 2 %</Text>
                   </View>
                 </View>
@@ -245,7 +250,7 @@ const CustomerInfoScreen = ({ navigation }) => {
                 <View style={styles.rankItem}>
                   <Image source={SilverRank} style={{height: 60, width: 60, marginHorizontal: 10}} />
                   <View style={{marginHorizontal: 10}}>
-                    <Text style={{fontWeight: 'bold'}}>Silver</Text>
+                    <Text style={{fontWeight: 'bold'}}>Bạc</Text>
                     <Text style={{width: 200}}>Khi điểm tích lũy của khách hàng đạt mức 50-100 điểm. Mức ưu đãi là 5 %</Text>
                   </View>
                 </View>
@@ -253,7 +258,7 @@ const CustomerInfoScreen = ({ navigation }) => {
                 <View style={styles.rankItem}>
                   <Image source={GoldRank} style={{height: 60, width: 60, marginHorizontal: 10}} />
                   <View style={{marginHorizontal: 10}}>
-                    <Text style={{fontWeight: 'bold'}}>Gold</Text>
+                    <Text style={{fontWeight: 'bold'}}>Vàng</Text>
                     <Text style={{width: 200}}>Khi điểm tích lũy của khách hàng đạt mức 100-200 điểm. Mức ưu đãi là 10 %</Text>
                   </View>
                 </View>
@@ -261,7 +266,7 @@ const CustomerInfoScreen = ({ navigation }) => {
                 <View style={styles.rankItem}>
                   <Image source={DiamondRank} style={{height: 60, width: 60, marginHorizontal: 10}} />
                   <View style={{marginHorizontal: 10}}>
-                    <Text style={{fontWeight: 'bold'}}>Diamond</Text>
+                    <Text style={{fontWeight: 'bold'}}>Kim cương</Text>
                     <Text style={{width: 200}}>Khi điểm tích lũy của khách hàng đạt mức trên 200 điểm. Mức ưu đãi là 15 %</Text>
                   </View>
                 </View>
@@ -272,7 +277,7 @@ const CustomerInfoScreen = ({ navigation }) => {
       </Modal>
       <View style={styles.header}>
         <Icons name='arrow-back-ios' size={28} onPress={() => navigation.navigate('HomeScreen')} />
-        <Text style={{ fontWeight: 'bold' }}>Profiles</Text>
+        <Text style={{ fontWeight: 'bold' }}>Thông tin chung</Text>
       </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -303,14 +308,48 @@ const CustomerInfoScreen = ({ navigation }) => {
 
               </TouchableOpacity>
             </View>
-            <Button title="Change password" color={COLORS.white} onPress={() => navigation.navigate('WarnPasswordScreen', user.phone)} />
+            <Button title="Đổi mật khẩu" color={COLORS.white} onPress={() => navigation.navigate('WarnPasswordScreen', user.phone)} />
           </View>
           <View style={styles.customerRank}>
-            <Image source={require('../../../assets/DiamondRank.png')} style={{height: 120, width: 120}} />
+            {
+              user?.rank?.id === 1 &&
+              <Image source={DiamondRank} style={{height: 120, width: 120}} />
+            }
+            {
+              user?.rank?.id === 2 &&
+              <Image source={GoldRank} style={{height: 120, width: 120}} />
+            }
+            {
+              user?.rank?.id === 3 &&
+              <Image source={SilverRank} style={{height: 120, width: 120}} />
+            }
+            {
+              user?.rank?.id === 4 &&
+              <Image source={BronzeRank} style={{height: 120, width: 120}} />
+            }
+            
             <Text style={{fontSize: 30, color: COLORS.white, fontWeight: "bold"}}>{user?.rank?.name.toUpperCase()}</Text>
-            <Text style={{fontSize: 20, color: COLORS.white, marginVertical: 10}}>{user.point} / 5000 (pts)</Text>
+            
+            {
+              user?.rank?.id == 4 &&
+              <Text style={{fontSize: 20, color: COLORS.white, marginVertical: 10}}>{user.point} / 50 (pts)</Text>
+            }
+            {
+              user?.rank?.id == 3 &&
+              <Text style={{fontSize: 20, color: COLORS.white, marginVertical: 10}}>{user.point} / 100 (pts)</Text>
+            }
+            {
+              user?.rank?.id == 2 &&
+              <Text style={{fontSize: 20, color: COLORS.white, marginVertical: 10}}>{user.point} / 200 (pts)</Text>
+            }
+            {
+              user?.rank?.id == 1 &&
+              <Text style={{fontSize: 20, color: COLORS.white, marginVertical: 10}}>{user.point} / Max (pts)</Text>
+            }
+            
             <View style={{backgroundColor: COLORS.white, height: 25,borderRadius: 10, width: 140}}>
-              <View style={{backgroundColor: '#bafc03' , height: 25,borderRadius: 10, width: 45}}>
+              
+              <View style={{backgroundColor: '#bafc03' , height: 25,borderRadius: 10, width: 40}}>
               
               </View>
             </View>
@@ -319,7 +358,7 @@ const CustomerInfoScreen = ({ navigation }) => {
         </View>
         
         <View style={styles.container}>
-          <Text style={styles.label}>Name</Text>
+          <Text style={styles.label}>Tên</Text>
           <Controller
             name="name"
             defaultValue={user.name}
@@ -344,7 +383,7 @@ const CustomerInfoScreen = ({ navigation }) => {
             )}
           />
           {errors.name && <Text style={styles.textDanger} >{errors.name.message}</Text>}
-          <Text style={styles.label}>Phone</Text>
+          <Text style={styles.label}>Số điện thoại</Text>
           <Controller
             name="phone"
             defaultValue={user.phone}
@@ -386,16 +425,16 @@ const CustomerInfoScreen = ({ navigation }) => {
             )}
           />
           {errors.email && <Text style={styles.textDanger}>{errors.email.message}</Text>}
-          <Text style={styles.label}>Rank</Text>
+          <Text style={styles.label}>Xếp hạng</Text>
           {userRank &&
             <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 15 }}>
               <Text style={styles.inputRank}>{userRank.name} ({user?.rank?.discount}%)</Text>
               <TouchableOpacity onPress={() => setModalVisible(true)}>
-                <Text style={{ marginLeft: 10, color: COLORS.primary }}>View detail <Icons name="arrow-forward-ios" /></Text>
+                <Text style={{ marginLeft: 10, color: COLORS.primary }}>Chi tiết <Icons name="arrow-forward-ios" /></Text>
               </TouchableOpacity>
             </View>
           }
-          <Text style={styles.label}>Role</Text>
+          <Text style={styles.label}>Loại tài khoản</Text>
           {userRole &&
             <Controller
               name="role"

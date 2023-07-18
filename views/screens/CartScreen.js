@@ -144,23 +144,23 @@ export default function CartScreen() {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalTitle}>Notification</Text> 
+              <Text style={styles.modalTitle}>Thông báo</Text> 
               <Image source={require('../../assets/succesfully.gif')} style={{width: 150, height: 150}} />
-              <Text style={styles.modalText}>Delete product succesfully</Text>
+              <Text style={styles.modalText}>Xóa sản phẩm thành công</Text>
               <Pressable
                 style={[styles.button, styles.buttonClose]} removeItem
                 onPress={() => {
                   setModalVisible(!modalVisible);
                 }}
               >
-                <Text style={styles.textStyle}>Done</Text>
+                <Text style={styles.textStyle}>OK</Text>
               </Pressable>
             </View>
           </View>
       </Modal>
       <View style={styles.header}>
         <Icon name='arrow-back-ios' size={28} onPress={navigation.goBack} />
-        <Text style={{ fontWeight: 'bold' }}>My cart</Text>
+        <Text style={{ fontWeight: 'bold' }}>Giỏ hàng</Text>
       </View>
 
       <FlatList
@@ -188,7 +188,7 @@ export default function CartScreen() {
                         removeItem(item.productId);
                       }}>
                         <Icon name='delete' size={40} color={COLORS.white} />
-                        <Text style={{ fontWeight: 'bold', color: COLORS.white }}>Delete</Text>
+                        <Text style={{ fontWeight: 'bold', color: COLORS.white }}>Xóa</Text>
                       </TouchableOpacity>
                     </Animated.Text>
                   </View>
@@ -199,7 +199,7 @@ export default function CartScreen() {
                     <Animated.Text style={{ transform: [{ scale: scale }] }}>
                       <TouchableOpacity onPress={() => navigation.navigate('ProductDetailScreen', item)} >
                         <Icon name='search' size={40} color={COLORS.white} />
-                        <Text style={{ fontWeight: 'bold', color: COLORS.white }}>View</Text>
+                        <Text style={{ fontWeight: 'bold', color: COLORS.white }}>Xem</Text>
                       </TouchableOpacity>
                     </Animated.Text>
                   </View>
@@ -214,7 +214,7 @@ export default function CartScreen() {
                 <View style={{ flex: 1, paddingVertical: 20, marginLeft: 10, height: 100 }}>
                   <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.productName}</Text>
                   <Text style={{ fontSize: 13, color: COLORS.white }}>{item.productId}</Text>
-                  <Text style={{ fontSize: 17, color: COLORS.white, fontWeight: 'bold' }}>{item.price} VNĐ</Text>
+                  <Text style={{ fontSize: 17, color: COLORS.white, fontWeight: 'bold' }}>{item.price} đ</Text>
                 </View>
                 <View style={{ marginRight: 20, alignItems: 'center' }}>
                   <Text style={{ fontWeight: 'bold', fontSize: 18 }}>{item.amount}</Text>
@@ -242,13 +242,13 @@ export default function CartScreen() {
                   marginVertical: 15,
                 }}>
                   <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-                    Total price
+                    Tổng thanh toán
                   </Text>
-                  <Text style={{fontSize: 20, fontWeight: 'bold'}}>{subtotal} VNĐ</Text>
+                  <Text style={{fontSize: 20, fontWeight: 'bold'}}>{subtotal} đ</Text>
                 </View> 
             
             <View style={{marginHorizontal: 60}}>
-              <PrimaryButton title="CHECKOUT" 
+              <PrimaryButton title="Thanh toán" 
                 onPress={() => navigation.navigate('CheckoutScreen')}
               />
             </View>

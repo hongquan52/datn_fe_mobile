@@ -206,12 +206,12 @@ const ProductsScreen = ({ navigation, route }) => {
         <View style={style.centeredView1}>
           <View style={style.modalView}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>FILTER YOUR SEARCH</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Lọc sản phẩm</Text>
               <Icon name='highlight-remove' size={30} onPress={() => setModalFilterVisible(!modalFilterVisible)} />
             </View>
             <View style={{ width: '100%', marginTop: 20 }}>
               <View>
-                <Text style={{ fontSize: 20 }}>Rating</Text>
+                <Text style={{ fontSize: 20 }}>Đánh giá</Text>
                 <View style={{ marginTop: 10, flexDirection: 'row', marginBottom: 20 }}>
                   {
                     [1, 2, 3, 4, 5].map((item) => (
@@ -227,7 +227,7 @@ const ProductsScreen = ({ navigation, route }) => {
                   }
                 </View>
               </View>
-              <Text style={{ fontSize: 20 }}>Brand</Text>
+              <Text style={{ fontSize: 20 }}>Thương hiệu</Text>
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -291,13 +291,14 @@ const ProductsScreen = ({ navigation, route }) => {
                 </View>
               </ScrollView>
               <View>
-                <Text style={{ fontSize: 20 }}>Price</Text>
+                <Text style={{ fontSize: 20 }}>Khoảng giá</Text>
                 <View style={{ marginTop: 10, flexDirection: 'row', marginBottom: 20, alignItems: 'center', justifyContent: 'space-around' }}>
                   <TextInput 
                     placeholder='Min Price'
                     value={filterMinPrice}
                     style={{width: 100, height: 30, backgroundColor: COLORS.light, padding: 3, marginHorizontal: 5, borderRadius: 5}}
                     onChangeText={(text) => setFilterMinPrice(text)}
+                    
                   />
                   <Text style={{fontSize: 30}}>-</Text>
                   <TextInput 
@@ -305,6 +306,7 @@ const ProductsScreen = ({ navigation, route }) => {
                     value={filterMaxPrice}
                     style={{width: 100, height: 30, backgroundColor: COLORS.light, padding: 3, marginHorizontal: 5, borderRadius: 5}}
                     onChangeText={(e) => setFilterMaxPrice(e)}
+                    
                   />
                   
                 </View>
@@ -400,7 +402,7 @@ const ProductsScreen = ({ navigation, route }) => {
               renderItem={({ item }) => <Card food={item} />}
             />
             :
-            <Text>Khong tim thay san pham phu hop</Text>
+            <Text>Không tìm thấy sản phẩm phù hợp</Text>
         }
 
       </ScrollView>

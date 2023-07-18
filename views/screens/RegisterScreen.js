@@ -84,14 +84,14 @@ const RegisterScreen = ({ navigation }) => {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalTitle}>Notification</Text> 
+              <Text style={styles.modalTitle}>Thông báo</Text> 
               <Image source={require('../../assets/error.gif')} style={{width: 150, height: 150}} />
-              <Text style={styles.modalText}>Password does't match confirm password</Text>
+              <Text style={styles.modalText}>Mật khẩu không trùng khớp</Text>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
               >
-                <Text style={styles.textStyle}>OK</Text>
+                <Text style={styles.textStyle}>Đồng ý</Text>
               </Pressable>
             </View>
           </View>

@@ -75,7 +75,7 @@ const ReviewProductScreen = ({ navigation, route }) => {
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
                 <Icons name='arrow-back-ios' size={28} onPress={navigation.goBack} />
-                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Review product</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Đánh giá sản phẩm</Text>
             </View>
             <ScrollView
                 horizontal

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { View, Text, SafeAreaView, StyleSheet, Image, Modal, TouchableOpacity, Dimensions, Pressable } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Image, Modal, TouchableOpacity, Dimensions, Pressable, Button } from 'react-native'
 import { TextInput, ScrollView, FlatList } from 'react-native-gesture-handler'
 import COLORS from '../../consts/colors'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -8,6 +8,7 @@ import Icons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BaseURL } from '../../consts/BaseURL'
 import { Suspense } from 'react'
+
 
 const Slider = React.lazy(() => import('../components/Slider'));
 
@@ -177,14 +178,14 @@ const HomeScreen = ({ navigation }) => {
       >
         <View style={style.centeredView1}>
           <View style={style.modalView}>
-            <Text style={style.modalTitle}>Notification</Text>
+            <Text style={style.modalTitle}>Thông báo</Text>
             <Image source={require('../../assets/succesfully.gif')} style={{ width: 150, height: 150 }} />
-            <Text style={style.modalText}>Add product to cart successfully</Text>
+            <Text style={style.modalText}>Thêm sản phẩm vào giỏ hàng thành công</Text>
             <Pressable
               style={[style.button, style.buttonClose]}
               onPress={() => setModalVisibleAddCart(!modalVisibleAddCart)}
             >
-              <Text style={style.textStyle}>Done</Text>
+              <Text style={style.textStyle}>OK</Text>
             </Pressable>
           </View>
         </View>
@@ -224,7 +225,7 @@ const HomeScreen = ({ navigation }) => {
                     navigation.navigate("CustomerInfoScreen");
                     setModalVisible(!modalVisible);
                   }}>
-                    <Text style={style.item}>Profile</Text>
+                    <Text style={style.item}>Thông tin chung</Text>
                   </TouchableOpacity>
                 </View>
                 <Icon name='arrow-forward-ios' />
@@ -236,7 +237,7 @@ const HomeScreen = ({ navigation }) => {
                     navigation.navigate("AddressScreen");
                     setModalVisible(!modalVisible);
                   }}>
-                    <Text style={style.item}>My address</Text>
+                    <Text style={style.item}>Địa chỉ</Text>
                   </TouchableOpacity>
                 </View>
                 <Icon name='arrow-forward-ios' />
@@ -248,7 +249,7 @@ const HomeScreen = ({ navigation }) => {
                     navigation.navigate("HistoryOrderScreen");
                     setModalVisible(!modalVisible);
                   }}>
-                    <Text style={style.item}>My order</Text>
+                    <Text style={style.item}>Đơn hàng</Text>
                   </TouchableOpacity>
                 </View>
                 <Icon name='arrow-forward-ios' />
@@ -260,7 +261,7 @@ const HomeScreen = ({ navigation }) => {
                     navigation.navigate("VoucherScreen");
                     setModalVisible(!modalVisible);
                   }}>
-                    <Text style={style.item}>My vouchers</Text>
+                    <Text style={style.item}>Ưu đãi của tôi</Text>
                   </TouchableOpacity>
                 </View>
                 <Icon name='arrow-forward-ios' />
@@ -273,7 +274,7 @@ const HomeScreen = ({ navigation }) => {
                     navigation.navigate("LoginScreen");
                     setModalVisible(!modalVisible);
                   }}>
-                    <Text style={style.item}>Log out</Text>
+                    <Text style={style.item}>Đăng xuất</Text>
                   </TouchableOpacity>
                 </View>
                 <Icon name='arrow-forward-ios' />
@@ -296,14 +297,17 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
           <View style={{ marginLeft: -55 }}>
             <View style={{ flexDirection: 'row' }}>
-              <Text style={{ fontSize: 28 }}>Welcome,</Text>
+              <Text style={{ fontSize: 28 }}>Chào,</Text>
               <Text style={{ fontSize: 28, fontWeight: 'bold', marginLeft: 10 }}>
                 {user.name}
               </Text>
             </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{ marginTop: 5, fontSize: 22, color: COLORS.grey }}>
-              What do you want today
+              Số dư ví: {user.wallet}đ 
             </Text>
+            <Button onPress={() => alert('Nạp tiền')} color={COLORS.primary} title='Nạp tiền'/>
+            </View>
           </View>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -353,13 +357,13 @@ const HomeScreen = ({ navigation }) => {
 
         <View style={style.groupProductContainer}>
           <View style={style.highlightProduct}>
-            <Text style={{ fontWeight: 'bold', fontSize: 18, marginLeft: 10, }}>Hot vouchers</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 18, marginLeft: 10, }}>Ưu đãi</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10, }}>
               <Icon name='arrow-forward-ios' size={25} />
               <TouchableOpacity
                 onPress={() => navigation.navigate("VoucherListScreen")}
               >
-                <Text style={{ fontSize: 16 }}>Show all</Text>
+                <Text style={{ fontSize: 16 }}>Xem thêm</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -373,13 +377,13 @@ const HomeScreen = ({ navigation }) => {
         </View>
         <View style={style.groupProductContainer}>
           <View style={style.highlightProduct}>
-            <Text style={{ fontWeight: 'bold', fontSize: 18, marginLeft: 10, }}>All product</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 18, marginLeft: 10, }}>Tất cả sản phẩm</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10, }}>
               <Icon name='arrow-forward-ios' size={25} />
               <TouchableOpacity
                 onPress={() => navigation.navigate("ProductsScreen", {searchProductText: '', flashSale: ''})}
               >
-                <Text style={{ fontSize: 16 }}>Show all</Text>
+                <Text style={{ fontSize: 16 }}>Xem thêm</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -397,7 +401,7 @@ const HomeScreen = ({ navigation }) => {
             <TouchableOpacity onPress={() => navigation.navigate("ProductsScreen", {searchProductText: '', flashSale: 'Flash Sale'})}>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10, }}>
                 <Icon name='arrow-forward-ios' size={25} />
-                <Text>See all</Text>
+                <Text>Xem thêm</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -411,11 +415,11 @@ const HomeScreen = ({ navigation }) => {
         </View>
         <View style={style.groupProductContainer}>
           <View style={style.highlightProduct}>
-            <Text style={{ fontWeight: 'bold', fontSize: 18, marginLeft: 10, }}>Hot product</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 18, marginLeft: 10, }}>Sản phẩm nổi bật</Text>
             <TouchableOpacity onPress={() => navigation.navigate("ProductsScreen", {searchProductText: '', flashSale: ''})}>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10, }}>
                 <Icon name='arrow-forward-ios' size={25} />
-                <Text>See all</Text>
+                <Text>Xem thêm</Text>
               </View>
             </TouchableOpacity>
           </View>

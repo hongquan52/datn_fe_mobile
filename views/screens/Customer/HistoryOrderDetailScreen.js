@@ -69,7 +69,7 @@ const HistoryOrderDetailScreen = ({ navigation, route }) => {
                 </View>
                 <View style={styles.detailItem}>
                     <Text style={{ marginVertical: 5, fontSize: 18, color: COLORS.white }}>{item.productName}</Text>
-                    <Text style={{ marginVertical: 5, fontSize: 16, fontWeight: 'bold' }}>{item.price} VND</Text>
+                    <Text style={{ marginVertical: 5, fontSize: 16, fontWeight: 'bold' }}>{item.price} đ</Text>
                     <View style={styles.amountItem}>
                         <Text style={{ marginVertical: 5, fontSize: 16, color: COLORS.dark }}>{item.amount}</Text>
                     </View>
@@ -104,15 +104,15 @@ const HistoryOrderDetailScreen = ({ navigation, route }) => {
                                 <View>
 
                                     <View style={styles.inputDelivery}>
-                                        <Text style={{ lineHeight: 30, fontSize: 17, fontWeight: 600 }}>Bill ID</Text>
+                                        <Text style={{ lineHeight: 30, fontSize: 17, fontWeight: 600 }}>Mã đơn hàng</Text>
                                         <Text style={{ lineHeight: 30, fontSize: 17 }}>{item.orderId}</Text>
                                     </View>
                                     <View style={styles.inputDelivery}>
-                                        <Text style={{ lineHeight: 30, fontSize: 17, fontWeight: 600 }}>Total Price</Text>
+                                        <Text style={{ lineHeight: 30, fontSize: 17, fontWeight: 600 }}>Tổng giá</Text>
                                         <Text style={{ lineHeight: 30, fontSize: 17 }}>{item.totalPrice} đ</Text>
                                     </View>
                                     <View style={styles.inputDelivery}>
-                                        <Text style={{ lineHeight: 30, fontSize: 17, fontWeight: 600 }}>Delivery address</Text>
+                                        <Text style={{ lineHeight: 30, fontSize: 17, fontWeight: 600 }}>Địa chỉ giao hàng</Text>
                                         <Text style={{ lineHeight: 30, fontSize: 17 }}>{deliveryData[0]?.deliveryApartmentNumber},
                                         {deliveryData[0]?.deliveryWard[0] === '{' ? JSON.parse(deliveryData[0]?.deliveryWard).ward_name : deliveryData[0]?.deliveryWard},
                                         {deliveryData[0]?.deliveryDistrict[0] === '{' ? JSON.parse(deliveryData[0]?.deliveryDistrict).district_name : deliveryData[0]?.deliveryDistrict},
@@ -124,11 +124,11 @@ const HistoryOrderDetailScreen = ({ navigation, route }) => {
                             <View style={styles.shipperInfo}>
                                 <Text style={{ fontSize: 25, fontWeight: "bold", width: 150, marginVertical: 20 }}>Shipper Information</Text>
                                 <View style={styles.inputDelivery}>
-                                    <Text style={{ lineHeight: 30, fontSize: 17, fontWeight: 600 }}>Name</Text>
+                                    <Text style={{ lineHeight: 30, fontSize: 17, fontWeight: 600 }}>Tên người giao hàng</Text>
                                     <Text style={{ lineHeight: 30, fontSize: 17 }}>{deliveryData[0]?.shipperName}</Text>
                                 </View>
                                 <View style={styles.inputDelivery}>
-                                    <Text style={{ lineHeight: 30, fontSize: 17, fontWeight: 600 }}>Phone</Text>
+                                    <Text style={{ lineHeight: 30, fontSize: 17, fontWeight: 600 }}>SĐT người giao hàng</Text>
 
                                     <Text style={{ lineHeight: 30, fontSize: 17 }}>{deliveryData[0]?.shipperPhone}</Text>
                                 </View>
@@ -153,7 +153,7 @@ const HistoryOrderDetailScreen = ({ navigation, route }) => {
                         </View>
                         :
                         <View style={{ marginHorizontal: 10,justifyContent: 'center', height: 300, alignItems: "center" }}>
-                            <Text style={{fontSize: 20, color: COLORS.primary, fontWeight: 'bold'}}>Your order hasn't been created delivery</Text>
+                            <Text style={{fontSize: 20, color: COLORS.primary, fontWeight: 'bold'}}>Đơn hàng chưa được vận chuyển</Text>
                         </View>
                     }
                 </View>
@@ -163,7 +163,7 @@ const HistoryOrderDetailScreen = ({ navigation, route }) => {
                     navigation.navigate('HomeScreen');
                     navigation.navigate('HistoryOrderScreen');
                 }} />
-                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Order detail</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Chi tiết đơn hàng</Text>
             </View>
             <View style={{ height: 50 }}>
                 <View style={{ alignItems: 'center', marginBottom: 10, marginHorizontal: 10 }}>
@@ -174,12 +174,12 @@ const HistoryOrderDetailScreen = ({ navigation, route }) => {
                 </View>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 10, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{item.finalPrice} VND</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{item.finalPrice} đ</Text>
                     {
                         stateStatus === 'Wait__Delivery' ? (
                             <Text style={{
                                 fontSize: 20, fontWeight: 'bold', backgroundColor: COLORS.secondary, padding: 5, color: COLORS.dark
-                            }}>Wait Delivery</Text>
+                            }}>Chờ giao</Text>
                         ) :
                             (
                                 <Text style={{

@@ -87,7 +87,7 @@ const VoucherListScreen = ({ navigation }) => {
                             <Animated.Text style={{ transform: [{ scale: scale }] }}>
                                 <View>
                                     <Icon name='delete' size={40} color={COLORS.white} />
-                                    <Text style={{ fontWeight: 'bold', color: COLORS.white }}>Delete</Text>
+                                    <Text style={{ fontWeight: 'bold', color: COLORS.white }}>Xóa</Text>
                                 </View>
                             </Animated.Text>
                         </View>
@@ -110,7 +110,7 @@ const VoucherListScreen = ({ navigation }) => {
                         <View>
                             <View style={{ flexDirection: 'row', marginVertical: 10, alignItems: 'center' }}>
                                 <Icon name='lock-clock' size={25} />
-                                <Text style={{ marginLeft: 5, fontWeight: 'bold', width: 50, color: 5 == 1 ? 'red' : 'green' }}>{5} days</Text>
+                                <Text style={{ marginLeft: 5, fontWeight: 'bold', width: 50, color: 5 == 1 ? 'red' : 'green' }}>{5} ngày</Text>
                             </View>
                             <TouchableOpacity
                                 onPress={() => {
@@ -123,7 +123,7 @@ const VoucherListScreen = ({ navigation }) => {
                                     // item.id==1 ? styles.claimBtnUnactive : styles.claimBtn
                                         
                                 }>
-                                    <Text style={{ fontSize: 15, color: COLORS.white, fontWeight: 'bold' }}>Claim</Text>
+                                    <Text style={{ fontSize: 15, color: COLORS.white, fontWeight: 'bold' }}>Lưu</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
@@ -140,7 +140,7 @@ const VoucherListScreen = ({ navigation }) => {
                     navigation.navigate('HomeScreen');
                     navigation.navigate('VoucherScreen');
                 }} />
-                <Text style={{ fontWeight: 'bold' }}>Hot vouchers</Text>
+                <Text style={{ fontWeight: 'bold' }}>Ưu đãi</Text>
             </View>
             <View
                 style={{

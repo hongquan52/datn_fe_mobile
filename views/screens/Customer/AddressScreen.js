@@ -88,7 +88,7 @@ export default function CheckoutScreen() {
     <SafeAreaView>
       <View style={styles.header}>
         <Icon name='arrow-back-ios' size={28} onPress={navigation.goBack} />
-        <Text style={{ fontWeight: 'bold' }}>My address</Text>
+        <Text style={{ fontWeight: 'bold' }}>Địa chỉ</Text>
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -111,7 +111,7 @@ export default function CheckoutScreen() {
                     <Animated.Text style={{ transform: [{ scale: scale }] }}>
                       <TouchableOpacity onPress={() => removeItem(item.address.id)}>
                         <Icon name='delete' size={40} color={COLORS.white} />
-                        <Text style={{ fontWeight: 'bold', color: COLORS.white }}>Delete</Text>
+                        <Text style={{ fontWeight: 'bold', color: COLORS.white }}>Xóa</Text>
                       </TouchableOpacity>
                     </Animated.Text>
                   </View>
@@ -134,7 +134,7 @@ export default function CheckoutScreen() {
                     {
                       item.defaultAddress ?
                       <View style={styles.defaultAddress}>
-                        <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Default address</Text>
+                        <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Mặc định</Text>
                       </View>
                       :
                       null
@@ -151,7 +151,7 @@ export default function CheckoutScreen() {
         <PrimaryButton
           onPress={() => navigation.navigate('NewAddressScreen')}
           // onPress={() => console.log("Address data: ", address)}
-          title={"ADD NEW ADDRESS"}
+          title={"Thêm địa chỉ"}
         />
       </View>
     </SafeAreaView>

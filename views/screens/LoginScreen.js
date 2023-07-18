@@ -82,10 +82,10 @@ const LoginScreen = ({ navigation }) => {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalTitle}>Notification</Text> 
+              <Text style={styles.modalTitle}>Thông báo</Text> 
               <Image source={require('../../assets/error.gif')} style={{width: 150, height: 150}} />
-              <Text style={styles.modalText}>The phone or password is<Text style={{color: 'red'}}> incorrect</Text>
-                  . Please enter again</Text>
+              <Text style={styles.modalText}>SĐT hoặc mật khẩu<Text style={{color: 'red'}}> không chính xác</Text>
+                  . Vui lòng nhập lại</Text>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
@@ -100,7 +100,7 @@ const LoginScreen = ({ navigation }) => {
 
       </View>
       <View style={styles.container}>
-        <Text style={styles.label}>Phone</Text>
+        <Text style={styles.label}>Số điện thoại</Text>
         <Controller
           name="phone"
           defaultValue={''}
@@ -108,7 +108,7 @@ const LoginScreen = ({ navigation }) => {
           rules={{
             required: {
               value: true,
-              message: 'The phone is required'
+              message: 'Số điện thoại là bắt buộc'
             },
           }}
           render={({ field: { value, onChange, onBlur } }) => (
@@ -121,13 +121,13 @@ const LoginScreen = ({ navigation }) => {
                 value={value}
                 onBlur={onBlur}
                 focusable
-                placeholder="Enter phone"
+                placeholder="Nhập số điện thoại"
               />
             </View>
           )}
         />
         {errors.phone && <Text style={styles.textDanger}>{errors.phone.message}</Text>}
-        <Text style={styles.label}>Password</Text>
+        <Text style={styles.label}>Mật khẩu</Text>
         <Controller
           name="password"
           defaultValue={''}
@@ -135,15 +135,15 @@ const LoginScreen = ({ navigation }) => {
           rules={{
             required: {
               value: true,
-              message: 'The password is required'
+              message: 'Trường mật khẩu là bắt buộc'
             },
             minLength: {
               value: 8,
-              message: 'The password > 8 characterss'
+              message: 'Mật khẩu phải trên 8 kí tự'
             },
             maxLength: {
               value: 16,
-              message: 'The password < 16 characterss'
+              message: 'Mật khẩu phải trên 16 kí tự'
             },
           }}
           render={({ field: { value, onChange, onBlur } }) => (
@@ -157,7 +157,7 @@ const LoginScreen = ({ navigation }) => {
                 onBlur={onBlur}
                 secureTextEntry={hidePassword}
                 focusable
-                placeholder="Enter password"
+                placeholder="Nhập mật khẩu"
               />
               <TouchableOpacity>
                 {
@@ -172,7 +172,7 @@ const LoginScreen = ({ navigation }) => {
         {errors.password && <Text style={styles.textDanger}>{errors.password.message}</Text>}
         <View style={{justifyContent: "flex-end", flexDirection: "row", marginRight: 10}}>
           <TouchableOpacity onPress={() => navigation.navigate("ResetPasswordScreen")}>
-            <Text style={{fontSize: 16, color: COLORS.primary}}>Reset password</Text>
+            <Text style={{fontSize: 16, color: COLORS.primary}}>Quên mật khẩu</Text>
           </TouchableOpacity>
         </View>
         <View style={{marginTop: 20}}>
@@ -188,8 +188,8 @@ const LoginScreen = ({ navigation }) => {
           
         </View>
         <View style={{justifyContent: 'center',marginVertical: 25, alignItems: "center"}}>
-          <Text style={{fontSize: 16}}>You don't have a account?
-            <Text onPress={() => navigation.navigate("RegisterScreen") }  style={{fontSize: 16, color: COLORS.primary}}>Sign up
+          <Text style={{fontSize: 16}}>Bạn chưa có tài khoản?
+            <Text onPress={() => navigation.navigate("RegisterScreen") }  style={{fontSize: 16, color: COLORS.primary}}>Đăng kí
             
             </Text>
           </Text>

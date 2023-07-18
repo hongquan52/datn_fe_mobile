@@ -8,7 +8,7 @@ const ChangePassSucess = ({navigation}) => {
             
             <View style={{ justifyContent: "center", alignItems: "center", marginTop: 100, marginHorizontal: 10}}>
                 <Image style={{height: 300, width: 300}} source={require('../../../assets/pass_reset.gif')} />
-                <Text style={{fontSize: 20, fontWeight: "bold"}}>The password has been changed</Text>
+                <Text style={{fontSize: 20, fontWeight: "bold"}}>Mật khẩu đã được thay đổi thành công</Text>
             </View>
             <View style={{marginHorizontal: 10, marginTop: 50}}>
                 <PrimaryButton title={'Done'} onPress={() => navigation.navigate("CustomerInfoScreen")}/>

@@ -326,7 +326,7 @@ const CheckoutScreen = ({ navigation }) => {
                                 setAddressConfirm(!addressConfirm);
                             }}
                         >
-                            <Text style={styles.textStyle}>Confirm</Text>
+                            <Text style={styles.textStyle}>Xác nhận</Text>
                         </Pressable>
 
                         <Pressable
@@ -337,7 +337,7 @@ const CheckoutScreen = ({ navigation }) => {
                             }}
                         >
                             <Icon name='add-circle' color={COLORS.white} size={16} />
-                            <Text style={styles.textStyle}>Create new address</Text>
+                            <Text style={styles.textStyle}>Địa chỉ mới</Text>
                         </Pressable>
                     </View>
                 </View>
@@ -389,7 +389,7 @@ const CheckoutScreen = ({ navigation }) => {
 
                                 }}
                             >
-                                <Text style={styles.textStyle}>Confirm</Text>
+                                <Text style={styles.textStyle}>Xác nhận</Text>
                             </Pressable>
                             <Pressable
                                 style={[styles.button, styles.buttonClose, { backgroundColor: COLORS.light }]}
@@ -400,7 +400,7 @@ const CheckoutScreen = ({ navigation }) => {
                                     setSubtotalState(0);
                                 }}
                             >
-                                <Text style={[styles.textStyle, { color: 'red' }]}>Don't use any voucher</Text>
+                                <Text style={[styles.textStyle, { color: 'red' }]}>Không dùng</Text>
                             </Pressable>
                         </ScrollView>
                     </View>
@@ -408,7 +408,7 @@ const CheckoutScreen = ({ navigation }) => {
             </Modal>
             <View style={styles.header}>
                 <Icon name='arrow-back-ios' size={28} onPress={navigation.goBack} />
-                <Text style={{ fontWeight: 'bold' }}>Checkout</Text>
+                <Text style={{ fontWeight: 'bold' }}>Đặt hàng</Text>
             </View>
             <ScrollView
                 showsVerticalScrollIndicator={false}
@@ -417,8 +417,8 @@ const CheckoutScreen = ({ navigation }) => {
                 <View style={{ marginHorizontal: 10 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={styles.label}>Order list</Text>
-                            <Text style={{ fontSize: 18, marginLeft: 15 }}>({productData.length} items)</Text>
+                            <Text style={styles.label}>Danh sách sản phẩm</Text>
+                            <Text style={{ fontSize: 18, marginLeft: 15 }}>({productData.length} sản phẩm)</Text>
                         </View>
                         <TouchableOpacity onPress={() => setExtendProduct(!extendProduct)}>
                             {
@@ -435,7 +435,7 @@ const CheckoutScreen = ({ navigation }) => {
 
                         }
                     </View>
-                    <Text style={styles.label}>Delivery address</Text>
+                    <Text style={styles.label}>Địa chỉ giao hàng</Text>
                     <Text style={{ fontSize: 17, fontWeight: 500, color: COLORS.primary }}>Nguyễn Lê Quỳnh Trang (+8442394898)</Text>
                     <View style={styles.addressCard}>
                         <Icon name='location-pin' size={40} />
@@ -446,7 +446,7 @@ const CheckoutScreen = ({ navigation }) => {
                         <Button title='Edit' color={COLORS.primary} onPress={() => setModalAddressVisible(true)} />
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginVertical: 10 }}>
-                        <Text style={styles.label}>Note</Text>
+                        <Text style={styles.label}>Lưu ý</Text>
                         <Controller
                             name='note'
                             defaultValue={''}
